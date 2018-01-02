@@ -10,7 +10,7 @@ from io import BytesIO
 import os   # This is used to execute linux commands
 
 begin = 101
-#last = 
+last = 300
 
 def PILRetrieveImage(img_url, idNum, dirName, cardId, evolveId, status_num):
 	# 0 = None for both non-idol & idolized
@@ -64,37 +64,45 @@ def PILRetrieveImage(img_url, idNum, dirName, cardId, evolveId, status_num):
 	extractQuotes(dirName, idNum, cardId, evolveId)
 
 
+for x in range(begin, last+1):
+	x_str = str(x)
 
-x_str = str(101)
+	temp_str = 'https://starlight.kirara.ca/api/v1/char_t/' + x_str
+	data = json.load(urllib2.urlopen(temp_str))
 
-temp_str = 'https://starlight.kirara.ca/api/v1/char_t/' + x_str
-data = json.load(urllib2.urlopen(temp_str))
+	if data['result'][0] is None:
+		continue
 
-japName = data['result'][0]['name']
-kanaName = data['result'][0]['name_kana']
 
-baseCardId = data['result'][0]['base_card_id']
+	japName = data['result'][0]['name']
+	kanaName = data['result'][0]['name_kana']
 
-card_url = 'https://starlight.kirara.ca/api/v1/card_t/' + str(baseCardId)
-data = json.load(urllib2.urlopen(card_url))
+	baseCardId = data['result'][0]['base_card_id']
 
-evolveId = data['result'][0]['evolution_id']
-romanName = data['result'][0]['chara']['conventional']
-firstName = romanName.split()[-1].lower()
-dirName = romanName.replace(" ", "_")
+	card_url = 'https://starlight.kirara.ca/api/v1/card_t/' + str(baseCardId)
+	data = json.load(urllib2.urlopen(card_url))
 
-cardURL = data['result'][0]['card_image_ref']
-imageURL = data['result'][0]['sprite_image_ref']
-iconURL = data['result'][0]['icon_image_ref']
+	evolveId = data['result'][0]['evolution_id']
+	romanName = data['result'][0]['chara']['conventional']
+	firstName = romanName.split()[-1].lower()
+	dirName = romanName.replace(" ", "_")
 
-if int(evolveId) == 0:
-	# That means there is no evolution form
-	PILRetrieveImage(imageURL, x_str, dirName.lower(), baseCardId,'None', 1)
-	print("['" + x_str + "','" + firstName +"','no'],")
-else:
-	# There is evolution form
-	PILRetrieveImage(imageURL, x_str, dirName.lower(), baseCardId, evolveId, 3)
-	print("['" + x_str + "','" + firstName +"','no'],")
-	print("['" + x_str + "','" + firstName +"','yes'],")
+	cardURL = data['result'][0]['card_image_ref']
+	imageURL = data['result'][0]['sprite_image_ref']
+	iconURL = data['result'][0]['icon_image_ref']
 
+	if int(evolveId) == 0:
+		# That means there is no evolution form
+		PILRetrieveImage(imageURL, x_str, dirName.lower(), baseCardId,'None', 1)
+		#print("['" + x_str + "','" + firstName +"','no'],")
+		print("['" + x_str + "','" + dirName.lower() +"','no'],")
+	else:
+		# There is evolution form
+		PILRetrieveImage(imageURL, x_str, dirName.lower(), baseCardId, evolveId, 3)
+		'''
+		print("['" + x_str + "','" + firstName +"','no'],")
+		print("['" + x_str + "','" + firstName +"','yes'],")
+		'''
+		print("['" + x_str + "','" + dirName.lower() +"','no'],")
+		print("['" + x_str + "','" + dirName.lower() +"','yes'],")
 
