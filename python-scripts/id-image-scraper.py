@@ -2,6 +2,8 @@ import json
 import urllib
 import urllib2
 
+from quoteScraper import extractQuotes
+
 from PIL import Image
 import requests
 from io import BytesIO
@@ -10,7 +12,7 @@ import os   # This is used to execute linux commands
 begin = 101
 #last = 
 
-def PILRetrieveImage(img_url, idNum, dirName, evolveId, status_num):
+def PILRetrieveImage(img_url, idNum, dirName, cardId, evolveId, status_num):
 	# 0 = None for both non-idol & idolized
   	# 1 = Only non-idolized exist
     	# 2 = Only idolized exist
@@ -59,7 +61,7 @@ def PILRetrieveImage(img_url, idNum, dirName, evolveId, status_num):
 		img.close()
 
 	# Below, we insert some code to extract quotes and audio clips
-
+	extractQuotes(dirName, idNum, cardId, evolveId)
 
 
 
@@ -87,11 +89,11 @@ iconURL = data['result'][0]['icon_image_ref']
 
 if int(evolveId) == 0:
 	# That means there is no evolution form
-	PILRetrieveImage(imageURL, x_str, dirName.lower(), 'None', 1)
+	PILRetrieveImage(imageURL, x_str, dirName.lower(), baseCardId,'None', 1)
 	print("['" + x_str + "','" + firstName +"','no'],")
 else:
 	# There is evolution form
-	PILRetrieveImage(imageURL, x_str, dirName.lower(), evolveId, 3)
+	PILRetrieveImage(imageURL, x_str, dirName.lower(), baseCardId, evolveId, 3)
 	print("['" + x_str + "','" + firstName +"','no'],")
 	print("['" + x_str + "','" + firstName +"','yes'],")
 
