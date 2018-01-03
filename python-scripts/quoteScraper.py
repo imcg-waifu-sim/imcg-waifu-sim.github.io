@@ -12,23 +12,23 @@ def audioExists(cardID):
 	# Check to see if the card has sound or not
 	cardID = str(cardID)
 
+
 	urlRead = 'https://starlight.kirara.ca/card/'+cardID
 	r = urllib.urlopen(urlRead).read()
 	soup = BeautifulSoup(r,"html.parser")
 	body = soup.find('body')
 
+	results = body.find_all(href=re.compile('\.mp3$'), recursive=True)
 
-	results = body.find_all(string=re.compile('.[mp3].'), recursive=True)
 
 	if len(results) > 0:
 		return True
 
 	return False	
 
-def dirExistCheck(fullName, charID, cardID, cardIDEv):
+def dirExistCheck(fullName, charID, cardID, cardIDEv, hasAudio):
 
 
-        hasAudio = audioExists(cardID)
 	hasAudioPath = 'no-audio'
 
         if hasAudio:
@@ -71,16 +71,15 @@ def dirExistCheck(fullName, charID, cardID, cardIDEv):
 
 
 
-def extractQuotes(fullName, charID, cardID, cardIDEv):
+def extractQuotes(fullName, charID, cardID, cardIDEv, hasAudio):
 
 	cardID = str(cardID)
 	charID = str(charID)
 	cardIDEv = str(cardIDEv)
 
 	# Make directories if they don't exist
-	dirExistCheck(fullName, charID, cardID, cardIDEv)
+	dirExistCheck(fullName, charID, cardID, cardIDEv, hasAudio)
         
-	hasAudio = audioExists(cardID)
 	hasAudioPath = 'no-audio'
 
         if hasAudio:

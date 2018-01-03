@@ -13,14 +13,14 @@ import os   # This is used to execute linux commands
 begin = 101
 last = 300
 
-def PILRetrieveImage(img_url, idNum, dirName, cardId, evolveId, status_num):
+def PILRetrieveImage(img_url, idNum, dirName, cardId, evolveId, hasAudio, status_num):
 	# 0 = None for both non-idol & idolized
   	# 1 = Only non-idolized exist
     	# 2 = Only idolized exist
     	# 3 = Both non-idol & idolized exist
 
 	hasAudioPath = 'no-audio'
-	if audioExists(cardId):
+	if hasAudio:
 		hasAudioPath = 'audio'
 
 
@@ -67,7 +67,7 @@ def PILRetrieveImage(img_url, idNum, dirName, cardId, evolveId, status_num):
 		img.close()
 
 	# Below, we insert some code to extract quotes and audio clips
-	extractQuotes(dirName, idNum, cardId, evolveId)
+	extractQuotes(dirName, idNum, cardId, evolveId, hasAudio)
 
 
 for x in range(begin, last+1):
@@ -104,13 +104,13 @@ for x in range(begin, last+1):
 
 	if int(evolveId) == 0:
 		# That means there is no evolution form
-		PILRetrieveImage(imageURL, x_str, dirName.lower(), baseCardId,'None', 1)
+		PILRetrieveImage(imageURL, x_str, dirName.lower(), baseCardId,'None', hasAudio, 1)
 		if hasAudio:
 			#print("['" + x_str + "','" + firstName +"','no'],")
 			print("['" + x_str + "','" + dirName.lower() +"','no'],")
 	else:
 		# There is evolution form
-		PILRetrieveImage(imageURL, x_str, dirName.lower(), baseCardId, evolveId, 3)
+		PILRetrieveImage(imageURL, x_str, dirName.lower(), baseCardId, evolveId, hasAudio, 3)
 		if hasAudio:
 			'''
 			print("['" + x_str + "','" + firstName +"','no'],")
