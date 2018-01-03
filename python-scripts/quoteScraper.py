@@ -6,22 +6,47 @@ from io import BytesIO
 
 from bs4 import BeautifulSoup
 import os
+import re
+
+def audioExists(cardID):
+	# Check to see if the card has sound or not
+	cardID = str(cardID)
+
+	urlRead = 'https://starlight.kirara.ca/card/'+cardID
+	r = urllib.urlopen(urlRead).read()
+	soup = BeautifulSoup(r,"html.parser")
+	body = soup.find('body')
+
+
+	results = body.find_all(string=re.compile('.[mp3].'), recursive=True)
+
+	if len(results) > 0:
+		return True
+
+	return False	
 
 def dirExistCheck(fullName, charID, cardID, cardIDEv):
 
+
+        hasAudio = audioExists(cardID)
+	hasAudioPath = 'no-audio'
+
+        if hasAudio:
+                hasAudioPath = 'audio'
+
 	# Preforming checks to see if directory exists
-	namePath = '../../distribution/imcg-waifu-sim-quotes/'+fullName+'/'
+	namePath = '../../distribution/imcg-waifu-sim-quotes/'+hasAudioPath+'/'+fullName+'/'
 	if not os.path.exists(namePath):
 		commandMake = 'mkdir ' + namePath
 		os.system(commandMake)
 
-	charIDPath = '../../distribution/imcg-waifu-sim-quotes/'+fullName+'/'+charID+'/'
+	charIDPath = '../../distribution/imcg-waifu-sim-quotes/'+hasAudioPath+'/'+fullName+'/'+charID+'/'
 	
 	if not os.path.exists(charIDPath):
 		commandMake = 'mkdir ' + charIDPath
 		os.system(commandMake)
 	
-	cardIDPath = '../../distribution/imcg-waifu-sim-quotes/'+fullName+'/'+charID+'/'+cardID+'/'
+	cardIDPath = '../../distribution/imcg-waifu-sim-quotes/'+hasAudioPath+'/'+fullName+'/'+charID+'/'+cardID+'/'
 	if not os.path.exists(cardIDPath):
 		commandMake = 'mkdir ' + cardIDPath
 		commandMakeHome = 'mkdir ' + cardIDPath + 'home/'
@@ -29,10 +54,11 @@ def dirExistCheck(fullName, charID, cardID, cardIDEv):
 
 		os.system(commandMake)
 		os.system(commandMakeHome)
-		os.system(commandMakeAudio)
+		if hasAudio:
+			os.system(commandMakeAudio)
 
 
-	cardIDEvPath = '../../distribution/imcg-waifu-sim-quotes/'+fullName+'/'+charID+'/'+cardIDEv+'/'
+	cardIDEvPath = '../../distribution/imcg-waifu-sim-quotes/'+hasAudioPath+'/'+fullName+'/'+charID+'/'+cardIDEv+'/'
 	if not os.path.exists(cardIDEvPath):
 		commandMake = 'mkdir ' + cardIDEvPath
 		commandMakeHome = 'mkdir ' + cardIDEvPath + 'home/'
@@ -40,7 +66,8 @@ def dirExistCheck(fullName, charID, cardID, cardIDEv):
 		
 		os.system(commandMake)
 		os.system(commandMakeHome)
-		os.system(commandMakeAudio)
+		if hasAudio:
+			os.system(commandMakeAudio)
 
 
 
@@ -52,14 +79,20 @@ def extractQuotes(fullName, charID, cardID, cardIDEv):
 
 	# Make directories if they don't exist
 	dirExistCheck(fullName, charID, cardID, cardIDEv)
+        
+	hasAudio = audioExists(cardID)
+	hasAudioPath = 'no-audio'
+
+        if hasAudio:
+                hasAudioPath = 'audio'
 
 
-	savePath = '../../distribution/imcg-waifu-sim-quotes/'+fullName+'/'+charID+'/'+cardID+'/home/quote.txt'
-	savePathEv = '../../distribution/imcg-waifu-sim-quotes/'+fullName+'/'+charID+'/'+cardIDEv+'/home/quote.txt'
+	savePath = '../../distribution/imcg-waifu-sim-quotes/'+hasAudioPath+'/'+fullName+'/'+charID+'/'+cardID+'/home/quote.txt'
+	savePathEv = '../../distribution/imcg-waifu-sim-quotes/'+hasAudioPath+'/'+fullName+'/'+charID+'/'+cardIDEv+'/home/quote.txt'
 
 
-	downloadPath = '../../distribution/imcg-waifu-sim-quotes/'+fullName+'/'+charID+'/'+cardID+'/home/audio/'
-	downloadPathEv = '../../distribution/imcg-waifu-sim-quotes/'+fullName+'/'+charID+'/'+cardIDEv+'/home/audio/'
+	downloadPath = '../../distribution/imcg-waifu-sim-quotes/'+hasAudioPath+'/'+fullName+'/'+charID+'/'+cardID+'/home/audio/'
+	downloadPathEv = '../../distribution/imcg-waifu-sim-quotes/'+hasAudioPath+'/'+fullName+'/'+charID+'/'+cardIDEv+'/home/audio/'
 
 
 

@@ -3,6 +3,7 @@ import urllib
 import urllib2
 
 from quoteScraper import extractQuotes
+from quoteScraper import audioExists
 
 from PIL import Image
 import requests
@@ -18,13 +19,18 @@ def PILRetrieveImage(img_url, idNum, dirName, cardId, evolveId, status_num):
     	# 2 = Only idolized exist
     	# 3 = Both non-idol & idolized exist
 
+	hasAudioPath = 'no-audio'
+	if audioExists(cardId):
+		hasAudioPath = 'audio'
+
+
 	if status_num == 0:
 		# If neither normal or evolved exists
 		return
 
 
 	# Check if new / unknown character
-	intendPathURL = '../../distribution/imcg-waifu-girl-images/scraped-images/'+ str(dirName) 
+	intendPathURL = '../../distribution/imcg-waifu-girl-images/scraped-images/'+ hasAudioPath +'/'+ str(dirName) 
 	
 	if not os.path.exists(intendPathURL):
 		# If it doesn't exist, we make the directory
@@ -32,8 +38,8 @@ def PILRetrieveImage(img_url, idNum, dirName, cardId, evolveId, status_num):
 		os.system(commandMake)
 
 
-	path_to_save = '../../distribution/imcg-waifu-girl-images/scraped-images/'+ str(dirName) +'/' + str(idNum) +'.png'
-	path_to_save_ev = '../../distribution/imcg-waifu-girl-images/scraped-images/' + str(dirName) + '/' + str(idNum) +'_ev.png'
+	path_to_save = '../../distribution/imcg-waifu-girl-images/scraped-images/'+ hasAudioPath + '/' +str(dirName) +'/' + str(idNum) +'.png'
+	path_to_save_ev = '../../distribution/imcg-waifu-girl-images/scraped-images/' + hasAudioPath + '/' + str(dirName) + '/' + str(idNum) +'_ev.png'
 
 
 	response = requests.get(img_url)
@@ -79,6 +85,7 @@ for x in range(begin, last+1):
 
 	baseCardId = data['result'][0]['base_card_id']
 
+
 	card_url = 'https://starlight.kirara.ca/api/v1/card_t/' + str(baseCardId)
 	data = json.load(urllib2.urlopen(card_url))
 
@@ -91,18 +98,24 @@ for x in range(begin, last+1):
 	imageURL = data['result'][0]['sprite_image_ref']
 	iconURL = data['result'][0]['icon_image_ref']
 
+
+	hasAudio = audioExists(baseCardId)
+
+
 	if int(evolveId) == 0:
 		# That means there is no evolution form
 		PILRetrieveImage(imageURL, x_str, dirName.lower(), baseCardId,'None', 1)
-		#print("['" + x_str + "','" + firstName +"','no'],")
-		print("['" + x_str + "','" + dirName.lower() +"','no'],")
+		if hasAudio:
+			#print("['" + x_str + "','" + firstName +"','no'],")
+			print("['" + x_str + "','" + dirName.lower() +"','no'],")
 	else:
 		# There is evolution form
 		PILRetrieveImage(imageURL, x_str, dirName.lower(), baseCardId, evolveId, 3)
-		'''
-		print("['" + x_str + "','" + firstName +"','no'],")
-		print("['" + x_str + "','" + firstName +"','yes'],")
-		'''
-		print("['" + x_str + "','" + dirName.lower() +"','no'],")
-		print("['" + x_str + "','" + dirName.lower() +"','yes'],")
+		if hasAudio:
+			'''
+			print("['" + x_str + "','" + firstName +"','no'],")
+			print("['" + x_str + "','" + firstName +"','yes'],")
+			'''
+			print("['" + x_str + "','" + dirName.lower() +"','no'],")
+			print("['" + x_str + "','" + dirName.lower() +"','yes'],")
 
