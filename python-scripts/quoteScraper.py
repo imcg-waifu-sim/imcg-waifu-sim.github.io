@@ -190,3 +190,36 @@ def extractQuotes(fullName, charID, cardID, cardIDEv, hasAudio):
 					correctSound = False
 
 
+def posterExtract(charID): 
+	# Check to see if the card has sound or not
+	charID = str(charID)
+
+
+	urlRead = 'https://starlight.kirara.ca/char/'+charID
+	r = urllib.urlopen(urlRead).read()
+	soup = BeautifulSoup(r,"html.parser")
+	body = soup.find('body')
+
+	divAr = body.findAll('div')
+
+	for div in divAr:
+
+		if div['class'][0] == 'spread_view':
+			urlImg = div['style']
+			extractURL = urlImg[urlImg.find("(")+1:urlImg.find(")")]
+			print(extractURL)
+			print('')
+
+		if div['class'][0] == 'carcon':		
+			picURL = 'https://truecolor.kirara.ca/spread/' + div['data-chain'].split()[1] + '.png'
+			print(picURL)
+			print('')
+
+	'''
+	results = body.find_all(href=re.compile('\.spread_view_rel$'), recursive=True)
+	if len(results) > 0:
+		return True
+
+	return False	
+	'''
+posterExtract(101)
