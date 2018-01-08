@@ -2,7 +2,7 @@
 
 var globalAudio = null;
 var globalWaifu = 'honoka';
-var maxNumOfCard = id_log[id_log.length-1][0];
+//var maxNumOfCard = id_log[id_log.length-1][0];
 var language = 'english';
 var maxNumBackground = 126;
 var globalIndex = 0;
@@ -1186,12 +1186,13 @@ function searchId()
 	var id = document.getElementById("card_id").value;
 	var idolized = $('input[id="radio-idol"]:checked').val();
 
-
-	if(!isInt(id) || parseInt(id) > maxNumOfCard){
+	
+	if(!isInt(id)){
 		alert('Invalid id input');
 		//alert('Invalid id input. Please enter a number between 28 and ' + maxNumOfCard.toString());
 		return;
 	} 
+
 	
 	var name = searchNameById(id);
 
@@ -1200,7 +1201,7 @@ function searchId()
 	// Once we get the info, get the image
 	var path;
 
-	var scrapePath = "https://llsif-waifu-sim.github.io/llsif-waifu-girl-images/scraped-images/";
+	var scrapePath = "https://imcg-waifu-sim.github.io/imcg-waifu-girl-images/scraped-images/audio/";
 	var cardPicPath = "https://llsif-waifu-sim.github.io/llsif-waifu-card-pics/scraped-images/"
 
 	if(isOthers(name)){
@@ -1212,14 +1213,14 @@ function searchId()
 	// If talking about Muse & Aqours
 	if(idolized == 'yes')
 	{
-		path = scrapePath + name + "/" + id + "_id.png";
-		cardPicPath = cardPicPath + name + "/" + id + "_id.png";
+		path = scrapePath + name + "/" + id + "_ev.png";
+		cardPicPath = cardPicPath + name + "/" + id + "_ev.png";
 	}else{
 		path = scrapePath + name +  "/" + id + ".png";
 		cardPicPath = cardPicPath + name +  "/" + id + ".png";
 	}
 
-	
+	alert(path);
 
 	$.ajax({
 	    url:path,
@@ -1439,7 +1440,9 @@ function changeWaifu(name, id){
 		globalAudio.play();
 	
 
-		var pathString = "".concat(audioPath, waifuName, file);
+		var textPath = "https://raw.githubusercontent.com/imcg-waifu-sim/imcg-waifu-quotes/master/audio/";
+		var pathString = textPath + waifuFullName + "/" +charId + "/" + cardId + "/home/"
+
 
 		changeSpeechText(pathString, n);
 		refreshBubble();
@@ -1463,14 +1466,14 @@ function changeWaifu(name, id){
 	        $('waifu_load_but_1').prop('disabled', false); 
 
 
-			var id = parseInt(id_log[i][0]);
-			var name = id_log[i][1];
-			var idolized = id_log[i][2];
+			var id = parseInt(id_log[i][1]);
+			var name = id_log[i][2];
+			var idolized = id_log[i][3];
 
 
-			var html_id = "ID: " + parseInt(id_log[i][0]);
-		    var html_name = "Name: " + getFullName(id_log[i][1]);
-		    var html_idol = "Idolized: " + capitalizeFirstLetter(id_log[i][2]);
+			var html_id = "ID: " + parseInt(id);
+		    var html_name = "Name: " + name;
+		    var html_idol = "Idolized: " + capitalizeFirstLetter(id_log[i][3]);
 
 
 
@@ -1490,14 +1493,14 @@ function changeWaifu(name, id){
 	        $('waifu_load_but_2').prop('disabled', false); 
 
 
-			var id = parseInt(id_log[i][0]);
-			var name = id_log[i][1];
-			var idolized = id_log[i][2];
+			var id = parseInt(id_log[i][1]);
+			var name = id_log[i][2];
+			var idolized = id_log[i][3];
 
 
-			var html_id = "ID: " + parseInt(id_log[i][0]);
-		    var html_name = "Name: " + getFullName(id_log[i][1]);
-		    var html_idol = "Idolized: " + capitalizeFirstLetter(id_log[i][2]);
+			var html_id = "ID: " + parseInt(id);
+		    var html_name = "Name: " + name;
+		    var html_idol = "Idolized: " + capitalizeFirstLetter(id_log[i][3]);
 
 
 
@@ -1516,14 +1519,13 @@ function changeWaifu(name, id){
 	        $('waifu_load_but_3').prop('disabled', false); 
 
 
-			var id = parseInt(id_log[i][0]);
-			var name = id_log[i][1];
-			var idolized = id_log[i][2];
+			var id = parseInt(id_log[i][1]);
+			var name = id_log[i][2];
+			var idolized = id_log[i][3];
 
-
-			var html_id = "ID: " + parseInt(id_log[i][0]);
-		    var html_name = "Name: " + getFullName(id_log[i][1]);
-		    var html_idol = "Idolized: " + capitalizeFirstLetter(id_log[i][2]);
+			var html_id = "ID: " + parseInt(id);
+		    var html_name = "Name: " + name;
+		    var html_idol = "Idolized: " + capitalizeFirstLetter(id_log[i][3]);
 
 
 		    document.getElementById("id-saved-3").innerHTML = html_id;
@@ -1719,9 +1721,9 @@ function changeWaifu(name, id){
 	function changeSpeechText (path, n) {
 		var pathString;
 		if(language == 'english'){
-			pathString = "".concat("./", path, "speech-en.txt");
+			pathString = "".concat(path, "quote.txt");
 		} else if(language == 'japanese'){
-			pathString = "".concat("./", path, "speech.txt");
+			pathString = "".concat(path, "quote.txt");
 		} else {
 			alert('Something went wrong');
 		}
