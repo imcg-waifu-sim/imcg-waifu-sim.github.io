@@ -4,6 +4,8 @@ import urllib2
 
 from quoteScraper import extractQuotes
 from quoteScraper import audioExists
+from quoteScraper import posterExtract
+from quoteScraper import spriteExtract
 
 from PIL import Image
 import requests
@@ -38,8 +40,8 @@ def PILRetrieveImage(img_url, idNum, dirName, cardId, evolveId, hasAudio, status
 		os.system(commandMake)
 
 
-	path_to_save = '../../distribution/imcg-waifu-girl-images/scraped-images/'+ hasAudioPath + '/' +str(dirName) +'/' + str(idNum) +'.png'
-	path_to_save_ev = '../../distribution/imcg-waifu-girl-images/scraped-images/' + hasAudioPath + '/' + str(dirName) + '/' + str(idNum) +'_ev.png'
+	path_to_save = '../../distribution/imcg-waifu-girl-images/scraped-images/'+ hasAudioPath + '/' +str(dirName) +'/' + str(cardId) +'.png'
+	path_to_save_ev = '../../distribution/imcg-waifu-girl-images/scraped-images/' + hasAudioPath + '/' + str(dirName) + '/' + str(cardId) +'_ev.png'
 
 
 	response = requests.get(img_url)
@@ -68,6 +70,8 @@ def PILRetrieveImage(img_url, idNum, dirName, cardId, evolveId, hasAudio, status
 
 	# Below, we insert some code to extract quotes and audio clips
 	extractQuotes(dirName, idNum, cardId, evolveId, hasAudio)
+	spriteExtract(dirName, idNum, cardId, evolveId, hasAudio)
+	posterExtract(dirName, idNum, cardId, evolveId, hasAudio)
 
 
 for x in range(begin, last+1):
@@ -105,17 +109,15 @@ for x in range(begin, last+1):
 	if int(evolveId) == 0:
 		# That means there is no evolution form
 		PILRetrieveImage(imageURL, x_str, dirName.lower(), baseCardId,'None', hasAudio, 1)
+
 		if hasAudio:
-			#print("['" + x_str + "','" + firstName +"','no'],")
-			print("['" + x_str + "','" + dirName.lower() +"','no'],")
+			print("['" + x_str + "','"+ baseCardId+"','" + dirName.lower() +"','no'],")
 	else:
 		# There is evolution form
 		PILRetrieveImage(imageURL, x_str, dirName.lower(), baseCardId, evolveId, hasAudio, 3)
+
 		if hasAudio:
-			'''
-			print("['" + x_str + "','" + firstName +"','no'],")
-			print("['" + x_str + "','" + firstName +"','yes'],")
-			'''
-			print("['" + x_str + "','" + dirName.lower() +"','no'],")
-			print("['" + x_str + "','" + dirName.lower() +"','yes'],")
+			# These values (baseCardID, evolveID) are flipped to maintain consistancy with javascirpt code
+			print("['" + x_str + "','"+ str(baseCardId)+"','" + dirName.lower() +"','no'],")
+			print("['" + x_str + "','"+ str(evolveId)+"','" + dirName.lower() +"','yes'],")
 

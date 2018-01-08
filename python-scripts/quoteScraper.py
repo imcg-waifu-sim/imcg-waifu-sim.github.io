@@ -3,6 +3,7 @@ import urllib
 import urllib2
 import requests
 from io import BytesIO
+from PIL import Image
 
 from bs4 import BeautifulSoup
 import os
@@ -77,6 +78,22 @@ def extractQuotes(fullName, charID, cardID, cardIDEv, hasAudio):
 	charID = str(charID)
 	cardIDEv = str(cardIDEv)
 
+	urlRead = 'https://starlight.kirara.ca/card/'+cardID
+	r = urllib.urlopen(urlRead).read()
+	soup = BeautifulSoup(r,"lxml")
+	body = soup.find('body')
+
+	searchID = 'va_card_' + cardID
+
+	#table = soup.find('table', id="va_card_100001")
+	table = soup.find('table', id=searchID)
+	
+	if table is None:
+		cardIDEv = str(int(cardID))
+		cardID = str(int(cardID) - 1)	
+		searchID = 'va_card_' + cardID
+		table = soup.find('table', id=searchID)
+
 	# Make directories if they don't exist
 	dirExistCheck(fullName, charID, cardID, cardIDEv, hasAudio)
         
@@ -95,17 +112,6 @@ def extractQuotes(fullName, charID, cardID, cardIDEv, hasAudio):
 
 
 
-	urlRead = 'https://starlight.kirara.ca/card/'+cardID
-	r = urllib.urlopen(urlRead).read()
-	soup = BeautifulSoup(r,"lxml")
-	body = soup.find('body')
-
-	searchID = 'va_card_' + cardID
-
-	#table = soup.find('table', id="va_card_100001")
-	table = soup.find('table', id=searchID)
-
-
 	quoteFile = open(savePath, 'w')
 
 	splitCounter = 0
@@ -115,6 +121,7 @@ def extractQuotes(fullName, charID, cardID, cardIDEv, hasAudio):
 
 	for row in table.findAll('tr'):
 		
+	
 		td = row.findAll('td')
 
 		#print '-----------'
@@ -189,8 +196,72 @@ def extractQuotes(fullName, charID, cardID, cardIDEv, hasAudio):
 
 					correctSound = False
 
+def spriteExtract(dirName, charID, cardID, cardIDEv, hasAudio):
+	# Extract sprites
+	charID = str(charID)
 
-def posterExtract(charID): 
+	urlRead = 'https://starlight.kirara.ca/char/'+charID
+	r = urllib.urlopen(urlRead).read()
+	soup = BeautifulSoup(r,"html.parser")
+	body = soup.find('body')
+
+	divAr = body.findAll('div')
+	
+	for div in divAr:
+		hasAudioPath = 'no-audio'
+		if hasAudio:
+			hasAudioPath = 'audio'
+
+		if div['class'][0] == 'hang_inside':
+		
+			aAr = div.findAll('a')
+			
+			for a in aAr:
+				# To get the cardID
+				if a.text == 'Petit sprite':
+					cardID = a['href'].split('/')[-1].split('.')[0]
+
+			for a in aAr:
+				if a.text == 'View sprite':
+					# Going to save the transparent images
+					normURL = a['href']
+	
+					digit = int(normURL.split('/')[-1].split('.')[0])
+					evURL = 'https://truecolor.kirara.ca/chara2/'+str(charID)+'/' + str(digit+1)+'.png'	
+			
+
+					path_to_save = '../../distribution/imcg-waifu-girl-images/scraped-images/'+ hasAudioPath + '/' +str(dirName) +'/' + str(cardID) +'.png'
+					path_to_save_ev = '../../distribution/imcg-waifu-girl-images/scraped-images/'+ hasAudioPath + '/' +str(dirName) +'/' + str(cardID) +'_ev.png'
+					response = requests.get(normURL)
+
+					if response.status_code == 404:
+						continue
+
+					img = Image.open(BytesIO(response.content))
+					img.save(path_to_save)
+					img.close()
+
+
+					response = requests.get(evURL)
+
+					if response.status_code == 404:
+						continue
+
+					img = Image.open(BytesIO(response.content))
+					img.save(path_to_save_ev)
+					img.close()
+
+					'''
+					print(normURL)
+					print(evURL)
+					print('')
+					'''
+
+
+
+
+def posterExtract(dirName, charID, cardID, cardIDEv, hasAudio):
+
 	# Check to see if the card has sound or not
 	charID = str(charID)
 
@@ -201,25 +272,67 @@ def posterExtract(charID):
 	body = soup.find('body')
 
 	divAr = body.findAll('div')
+	
 
 	for div in divAr:
 
+		hasAudioPath = 'no-audio'
+		if hasAudio:
+			hasAudioPath = 'audio'
+
+
 		if div['class'][0] == 'spread_view':
+			# evolution forms
+
+
+			if hasAudio:
+				path_to_save
+
 			urlImg = div['style']
 			extractURL = urlImg[urlImg.find("(")+1:urlImg.find(")")]
-			print(extractURL)
-			print('')
+			cardID = extractURL[-10:-4]
+
+
+			path_to_save_ev = '../../distribution/imcg-waifu-girl-images/scraped-images/'+ hasAudioPath + '/' +str(dirName) +'/' + str(cardID) +'_pev.png'
+
+			response = requests.get(extractURL)
+
+			if response.status_code == 404:
+				continue
+
+			img = Image.open(BytesIO(response.content))
+			img.save(path_to_save_ev)
+			img.close()
+
+
+			if hasAudio:
+
+                        	print("['" + charID + "','"+ cardID+"','" + dirName.lower() +"','yes'],")
+
+
+				extractQuotes(dirName, charID, cardID, cardIDEv, hasAudio)
+
 
 		if div['class'][0] == 'carcon':		
+			# normal forms
+
 			picURL = 'https://truecolor.kirara.ca/spread/' + div['data-chain'].split()[1] + '.png'
-			print(picURL)
-			print('')
+			cardID = div['data-chain'].split()[1][-10:]
+	
+			path_to_save = '../../distribution/imcg-waifu-girl-images/scraped-images/'+ hasAudioPath + '/' +str(dirName) +'/' + str(cardID) +'_p.png'
+			response = requests.get(picURL)
 
-	'''
-	results = body.find_all(href=re.compile('\.spread_view_rel$'), recursive=True)
-	if len(results) > 0:
-		return True
+			if response.status_code == 404:
+				continue
 
-	return False	
-	'''
-posterExtract(101)
+			img = Image.open(BytesIO(response.content))
+			img.save(path_to_save)
+			img.close()
+
+
+			if hasAudio:
+				print("['" + charID + "','"+ cardID+"','" + dirName.lower() +"','no'],")
+				extractQuotes(dirName, charID, cardID, cardIDEv, hasAudio)
+
+
+
