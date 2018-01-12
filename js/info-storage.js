@@ -27,6 +27,7 @@ function setCookie(cname, cvalue, exdays) {
     d.setTime(d.getTime() + (exdays*24*60*60*1000));
     var expires = "expires="+ d.toUTCString();
     document.cookie = cname + "=" + cvalue + "; " + expires;
+    alert()
 }
 
 function getCookie(cname) {
@@ -62,12 +63,13 @@ function deleteCookie(name) {
 
 function checkCookie() {
     var index=getCookie("waifu-index");
+    alert(index);
     globalIndex = index;
     if (index != null && index != "" && !isNaN(index)) {
         mainWaifuSet(index);
     } else{
-    	document.getElementById("idol_img").src= 'images/waifu/honoka0.png';
-        document.getElementById("card_id").value = 28;
+    	document.getElementById("idol_img").src= 'https://imcg-waifu-sim.github.io/imcg-waifu-girl-images/scraped-images/audio/shimamura_uzuki/100001.png';
+        document.getElementById("card_id").value = 100001;
         globalIndex = 0;
     }
 }
@@ -118,6 +120,7 @@ function checkWaifuLoadCookie(but_id) {
     var index2=getCookie("saved-waifu-index-2");
     var index3=getCookie("saved-waifu-index-3");
 
+
     if (index != null && index != "" && !isNaN(index)) {
 
         if(but_id == 'waifu_load_but_1'){
@@ -160,6 +163,7 @@ function checkWaifuLoadCookie(but_id) {
 
 function storeCookie(index)
 {
+
     setCookie("waifu-index", index, cookieExpireDate);
 }
 
@@ -169,7 +173,8 @@ function storeBGMusicCookie(index)
 }
 
 function storeSaveWaifuCookie(index, but_id)
-{
+{   
+
     if(but_id == 'waifu_save_but_1'){
        setCookie("saved-waifu-index-1", index, cookieExpireDate); 
    } else if(but_id == 'waifu_save_but_2'){
@@ -205,15 +210,15 @@ function storeVolumeVoiceCookie(volume)
 function mainWaifuSet(index)
 {
 
-    var id = parseInt(id_log[index][0]);
-    var name = id_log[index][1];
-    var idolized = id_log[index][2];
+    var id = parseInt(id_log[index][1]);
+    var name = id_log[index][2];
+    var idolized = id_log[index][3];
 
     // Once we get the info, get the image
     var path;
 
-    var scrapePath = "https://llsif-waifu-sim.github.io/llsif-waifu-girl-images/scraped-images/";
-    var cardPicPath = "https://llsif-waifu-sim.github.io/llsif-waifu-card-pics/scraped-images/"
+    var scrapePath = "https://imcg-waifu-sim.github.io/imcg-waifu-girl-images/scraped-images/audio/";
+    var cardPicPath = "https://llsif-waifu-sim.github.io/llsif-waifu-card-pics/scraped-images/audio/"
 
     if(isOthers(name)){
         scrapePath = "https://llsif-waifu-sim.github.io/llsif-waifu-girl-images/scraped-images/z-others/"
@@ -224,15 +229,16 @@ function mainWaifuSet(index)
     // If talking about Muse & Aqours
     if(idolized == 'yes')
     {
-        path = scrapePath + name + "/" + id + "_id.png";
-        cardPicPath = cardPicPath + name + "/" + id + "_id.png";
+        path = scrapePath + name + "/" + id + "_ev.png";
+        cardPicPath = cardPicPath + name + "/" + id + "_ev.png";
         document.querySelector("input[value='yes']").checked = true;
     }else{
+        id = (parseInt(id)-1).toString();
         path = scrapePath + name +  "/" + id + ".png";
         cardPicPath = cardPicPath + name +  "/" + id + ".png";
         document.querySelector("input[value='no']").checked = true;
     }
-
+    
 
         
 
@@ -278,38 +284,44 @@ function volumeBackSet(volume_value)
 }
 
 
-
 function savedWaifuLoad(index)
 {
 
-    var id = parseInt(id_log[index][0]);
-    var name = id_log[index][1];
-    var idolized = id_log[index][2];
+
+
+    var id = parseInt(id_log[index][1]);
+    var name = id_log[index][2];
+    var idolized = id_log[index][3];
+
 
 
     // Once we get the info, get the image
     var path;
 
-    var scrapePath = "https://llsif-waifu-sim.github.io/llsif-waifu-girl-images/scraped-images/";
-    var cardPicPath = "https://llsif-waifu-sim.github.io/llsif-waifu-card-pics/scraped-images/"
+    var scrapePath = "https://imcg-waifu-sim.github.io/imcg-waifu-girl-images/scraped-images/audio/";
+    //var scrapePath = "../distribution/imcg-waifu-girl-images/scraped-images/audio/";
+    var cardPicPath = "https://imcg-waifu-sim.github.io/imcg-waifu-girl-images/scraped-images/audio/"
 
     if(isOthers(name)){
         scrapePath = "https://llsif-waifu-sim.github.io/llsif-waifu-girl-images/scraped-images/z-others/"
         cardPicPath = "https://llsif-waifu-sim.github.io/llsif-waifu-card-pics/scraped-images/z-others/"
     } 
 
-    
+    var idNormal = convertToNormalForm(id, idolized);
+    //alert(idNormal);
+
     // If talking about Muse & Aqours
     if(idolized == 'yes')
     {
-        path = scrapePath + name + "/" + id + "_id.png";
-        cardPicPath = cardPicPath + name + "/" + id + "_id.png";
+        path = scrapePath + name + "/" + idNormal + "_ev.png";
+        cardPicPath = cardPicPath + name + "/" + idNormal + "_ev.png";
         document.querySelector("input[value='yes']").checked = true;
     }else{
-        path = scrapePath + name +  "/" + id + ".png";
-        cardPicPath = cardPicPath + name +  "/" + id + ".png";
+        path = scrapePath + name +  "/" + idNormal + ".png";
+        cardPicPath = cardPicPath + name +  "/" + idNormal + ".png";
         document.querySelector("input[value='no']").checked = true;
     }
+    //alert(path);
 
     //file exists
     document.getElementById("idol_img").src=path;

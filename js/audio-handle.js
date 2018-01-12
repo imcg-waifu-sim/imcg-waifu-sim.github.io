@@ -171,13 +171,13 @@ function forgotSpeech()
 
 
 }
-
+/*
 function forgetWaifuLoad(index)
 {
 
-    var id = parseInt(id_log[index][0]);
-    var name = id_log[index][1];
-    var idolized = id_log[index][2];
+    var id = parseInt(id_log[index][1]);
+    var name = id_log[index][2];
+    var idolized = id_log[index][3];
 
 
     // Once we get the info, get the image
@@ -222,7 +222,7 @@ function forgetWaifuLoad(index)
 
 
 }
-
+*/
 
 function enableOutside()
 {
@@ -964,13 +964,10 @@ function getRandomWaifu()
 
 
 	var scrapePath = "https://imcg-waifu-sim.github.io/imcg-waifu-girl-images/scraped-images/audio/";
+    //var scrapePath = "../distribution/imcg-waifu-girl-images/scraped-images/audio/";
 	var cardPicPath = "https://llsif-waifu-sim.github.io/llsif-waifu-card-pics/scraped-images/"
 
-	if(isOthers(name)){
-		scrapePath = "https://llsif-waifu-sim.github.io/llsif-waifu-girl-images/scraped-images/z-others/"
-		cardPicPath = "https://llsif-waifu-sim.github.io/llsif-waifu-card-pics/scraped-images/z-others/"
-	} 
-
+	
 
 	
 	// If talking about Muse & Aqours
@@ -1018,13 +1015,14 @@ function getRandomWaifu()
 function getRandomCard()
 {
 
+	/*
 	var neg = forgetWaifuRNG(30);
 
 	if(neg == 0){
 		// forgetWaifu speech was successful
 		return;
 	}
-
+	*/
 
 
 	//var i = cardRNG(); 
@@ -1044,12 +1042,9 @@ function getRandomCard()
 	globalIndex = i;
 
 	var scrapePath = "https://imcg-waifu-sim.github.io/imcg-waifu-girl-images/scraped-images/audio/";
+    //var scrapePath = "../distribution/imcg-waifu-girl-images/scraped-images/audio/";
 	var cardPicPath = "https://imcg-waifu-sim.github.io/imcg-waifu-sim/imcg-waifu-girl-images/"
 
-	if(isOthers(name)){
-		scrapePath = "https://llsif-waifu-sim.github.io/llsif-waifu-girl-images/scraped-images/z-others/"
-		cardPicPath = "https://llsif-waifu-sim.github.io/llsif-waifu-card-pics/scraped-images/z-others/"
-	} 
 
 
 	
@@ -1129,9 +1124,10 @@ function searchNameById(id)
 	var i;
 	for(i = 0; i < id_log.length; i++)
 	{
-		if(id_log[i][0] == id.toString())
+		if(id_log[i][1] == id.toString())
 		{
-			return id_log[i][1];
+
+			return id_log[i][2];
 		}
 	}
 	return 'none';
@@ -1141,12 +1137,13 @@ function searchNameById(id)
 function searchIndexById(id, idolized)
 {
 	var i;
+
 	for(i = 0; i < id_log.length; i++)
 	{
-		if(id_log[i][0] == id.toString())
+		if(id_log[i][1] == id.toString())
 		{
 			
-
+			
 			// If we are at the end of the array, no need to check if there is anything a step further
 			if(i == id_log.length - 1) 
 			{
@@ -1155,10 +1152,11 @@ function searchIndexById(id, idolized)
 
 
 			// During normal conditions
-			if(idolized == 'yes' && ( id_log[i+1][0] == id.toString() )){
-				return i + 1;
-			} else{
+			if(idolized == 'yes' && ( id_log[i][1] == id.toString() )){
 				return i;
+			} else{
+				// If not idolized
+				return i-1;
 			}
 		}
 	}
@@ -1180,6 +1178,52 @@ function searchIdolizedById(id)
 	return 'none';
 }
 
+
+function convertToNormalForm(id, idolized)
+{
+	
+	var i;
+	//alert(id);
+	//alert(idolized);
+
+	for(i = 0; i < id_log.length; i++)
+	{
+		if(id_log[i][1] == id.toString())
+		{
+			// We found one of the id (possible it is 100102)
+
+			//alert(id_log[i]);
+			if(idolized == 'no' && id_log[i][3] == 'no'){
+				//alert('1');
+				return (parseInt(id_log[i][1])-1).toString();
+			} 
+			if(idolized == 'yes' && id_log[i][3] == 'yes'){
+				//alert('2');
+				return id_log[i][1];
+				
+			} 
+
+
+			if(idolized == 'no' && id_log[i][3] == 'yes'){
+				//alert('3');
+				return id_log[i][1];
+			} 
+			if(idolized == 'yes' && id_log[i][3] == 'no'){
+				//alert('4');
+				return (parseInt(id_log[i][1])-1).toString();
+			} 
+
+
+
+			alert('Landed on something, but nothing found');
+		}
+	}
+	return 'none';
+}
+
+
+
+
 function searchId()
 {
 
@@ -1193,40 +1237,41 @@ function searchId()
 		return;
 	} 
 
-	
+	var idNormal = convertToNormalForm(id, idolized);
 	var name = searchNameById(id);
+	//alert(id);
+
 
 	
+
 
 	// Once we get the info, get the image
 	var path;
 
 	var scrapePath = "https://imcg-waifu-sim.github.io/imcg-waifu-girl-images/scraped-images/audio/";
+    //var scrapePath = "../distribution/imcg-waifu-girl-images/scraped-images/audio/";
 	var cardPicPath = "https://llsif-waifu-sim.github.io/llsif-waifu-card-pics/scraped-images/"
 
-	if(isOthers(name)){
-		scrapePath = "https://llsif-waifu-sim.github.io/llsif-waifu-girl-images/scraped-images/z-others/"
-		cardPicPath = "https://llsif-waifu-sim.github.io/llsif-waifu-card-pics/scraped-images/z-others/"
-	} 
 
 	
 	// If talking about Muse & Aqours
 	if(idolized == 'yes')
 	{
-		path = scrapePath + name + "/" + id + "_ev.png";
-		cardPicPath = cardPicPath + name + "/" + id + "_ev.png";
+		path = scrapePath + name + "/" + idNormal + "_ev.png";
+		cardPicPath = cardPicPath + name + "/" + idNormal + "_ev.png";
 	}else{
-		path = scrapePath + name +  "/" + id + ".png";
-		cardPicPath = cardPicPath + name +  "/" + id + ".png";
+		path = scrapePath + name +  "/" + idNormal + ".png";
+		cardPicPath = cardPicPath + name +  "/" + idNormal + ".png";
 	}
 
-	alert(path);
+	//alert(path);
 
 	$.ajax({
 	    url:path,
 	    type:'HEAD',
 	    error: function()
 	    {
+
 	        //file not exists
 	        alert('Idolized / Non-idolized version of card not found. Trying filling out the alternate option bubble.');
 			commandSelect(0);
@@ -1299,6 +1344,7 @@ function changeWaifu(name, id){
 		}
 
 		var audioPath = "https://raw.githubusercontent.com/imcg-waifu-sim/imcg-waifu-quotes/master/audio/";
+
 
 		var charId = id_log[globalIndex][0];
 		var cardId = id_log[globalIndex][1];
@@ -1816,7 +1862,8 @@ $(window).focus(function() {
 		
 		if(timerRanOut){
 
-		    var neg = forgetWaifuRNG(7);
+		    //var neg = forgetWaifuRNG(7);
+		    neg = -1;
 
 			if(neg == -1){
 				// If forget waifu speech was not successful
