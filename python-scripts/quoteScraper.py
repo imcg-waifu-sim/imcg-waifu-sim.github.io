@@ -72,13 +72,14 @@ def dirExistCheck(fullName, charID, cardID, cardIDEv, hasAudio):
 
 
 
-def extractQuotes(fullName, charID, cardID, cardIDEv, hasAudio):
+def extractQuotes(fullName, charID, cardID, cardIDEv, hasAudio, fromPoster):
 
 	cardID = str(cardID)
 	charID = str(charID)
 	cardIDEv = str(cardIDEv)
 
 	urlRead = 'https://starlight.kirara.ca/card/'+cardID
+	
 	r = urllib.urlopen(urlRead).read()
 	soup = BeautifulSoup(r,"lxml")
 	body = soup.find('body')
@@ -102,14 +103,21 @@ def extractQuotes(fullName, charID, cardID, cardIDEv, hasAudio):
         if hasAudio:
                 hasAudioPath = 'audio'
 
+	if not fromPoster:
+		savePath = '../../distribution/imcg-waifu-sim-quotes/'+hasAudioPath+'/'+fullName+'/'+charID+'/'+cardID+'/home/quote.txt'
+		savePathEv = '../../distribution/imcg-waifu-sim-quotes/'+hasAudioPath+'/'+fullName+'/'+charID+'/'+cardIDEv+'/home/quote.txt'
 
-	savePath = '../../distribution/imcg-waifu-sim-quotes/'+hasAudioPath+'/'+fullName+'/'+charID+'/'+cardID+'/home/quote.txt'
-	savePathEv = '../../distribution/imcg-waifu-sim-quotes/'+hasAudioPath+'/'+fullName+'/'+charID+'/'+cardIDEv+'/home/quote.txt'
+
+		downloadPath = '../../distribution/imcg-waifu-sim-quotes/'+hasAudioPath+'/'+fullName+'/'+charID+'/'+cardID+'/home/audio/'
+		downloadPathEv = '../../distribution/imcg-waifu-sim-quotes/'+hasAudioPath+'/'+fullName+'/'+charID+'/'+cardIDEv+'/home/audio/'
+	else:
+		# If it is a poster
+		savePath = '../../distribution/imcg-waifu-sim-quotes/'+hasAudioPath+'/'+fullName+'/'+charID+'/'+cardIDEv+'/home/quote.txt'
+		savePathEv = '../../distribution/imcg-waifu-sim-quotes/'+hasAudioPath+'/'+fullName+'/'+charID+'/'+cardID+'/home/quote.txt'
 
 
-	downloadPath = '../../distribution/imcg-waifu-sim-quotes/'+hasAudioPath+'/'+fullName+'/'+charID+'/'+cardID+'/home/audio/'
-	downloadPathEv = '../../distribution/imcg-waifu-sim-quotes/'+hasAudioPath+'/'+fullName+'/'+charID+'/'+cardIDEv+'/home/audio/'
-
+		downloadPath = '../../distribution/imcg-waifu-sim-quotes/'+hasAudioPath+'/'+fullName+'/'+charID+'/'+cardIDEv+'/home/audio/'
+		downloadPathEv = '../../distribution/imcg-waifu-sim-quotes/'+hasAudioPath+'/'+fullName+'/'+charID+'/'+cardID+'/home/audio/'
 
 
 	quoteFile = open(savePath, 'w')
@@ -118,6 +126,9 @@ def extractQuotes(fullName, charID, cardID, cardIDEv, hasAudio):
 	stageNum = 0
 	enteredFirst = False
 	occ_count = -1
+
+	if table is None:
+		print(cardID)
 
 	for row in table.findAll('tr'):
 		
@@ -234,13 +245,13 @@ def spriteExtract(dirName, charID, cardID, cardIDEv, hasAudio):
 					path_to_save_ev = '../../distribution/imcg-waifu-girl-images/scraped-images/'+ hasAudioPath + '/' +str(dirName) +'/' + str(cardID) +'_ev.png'
 					response = requests.get(normURL)
 
+					'''
 					if response.status_code == 404:
 						continue
 
 					img = Image.open(BytesIO(response.content))
 					img.save(path_to_save)
 					img.close()
-
 
 					response = requests.get(evURL)
 
@@ -250,6 +261,7 @@ def spriteExtract(dirName, charID, cardID, cardIDEv, hasAudio):
 					img = Image.open(BytesIO(response.content))
 					img.save(path_to_save_ev)
 					img.close()
+					'''
 
 					'''
 					print(normURL)
@@ -310,7 +322,7 @@ def posterExtract(dirName, charID, cardID, cardIDEv, hasAudio):
                         	print("['" + charID + "','"+ cardID+"','" + dirName.lower() +"','yes'],")
 
 
-				extractQuotes(dirName, charID, cardID, cardIDEv, hasAudio)
+				extractQuotes(dirName, charID, cardID, cardIDEv, hasAudio, True)
 
 
 		if div['class'][0] == 'carcon':		
@@ -332,7 +344,7 @@ def posterExtract(dirName, charID, cardID, cardIDEv, hasAudio):
 
 			if hasAudio:
 				print("['" + charID + "','"+ cardID+"','" + dirName.lower() +"','no'],")
-				extractQuotes(dirName, charID, cardID, cardIDEv, hasAudio)
+				extractQuotes(dirName, charID, cardID, cardIDEv, hasAudio, True)
 
 
 

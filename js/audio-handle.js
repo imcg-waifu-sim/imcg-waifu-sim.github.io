@@ -72,7 +72,8 @@ function inactiveSpeech()
 			
 	
 	if(!away){
-		timeSpeech();
+		//timeSpeech();
+		commandSelect(0);
 		clearTimeout(timeout);
 		timeout = setTimeout(inactiveSpeech, countdown);
 	} else {
@@ -1276,7 +1277,7 @@ function searchId()
 		cardPicPath = cardPicPath + name +  "/" + idNormal + ".png";
 	}
 
-	//alert(path);
+	
 
 	$.ajax({
 	    url:path,
@@ -1303,7 +1304,8 @@ function searchId()
 				nameAssign(name.split('_')[1]);
 			}
 
-			globalIndex = searchIndexById(id, idolized);
+		
+			globalIndex = searchIndexById(idNormal, idolized);
 
 			if (globalAudio!=null){
 				globalAudio.pause();
@@ -1361,6 +1363,10 @@ function changeWaifu(name, id){
 		// mode == 2 is story button
 		// mode == 3 is member button
 		// mode == 4 is waifu / home for other characters
+
+		// Forces everthing to go to one mode
+		mode = 0;
+
 		if (globalAudio!=null){
 			globalAudio.pause();
 		}
@@ -1821,6 +1827,7 @@ function changeWaifu(name, id){
 		} else {
 			alert('Something went wrong');
 		}
+		//alert(pathString);
 
 		var client;
         if (window.XMLHttpRequest) {

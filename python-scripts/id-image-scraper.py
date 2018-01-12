@@ -43,12 +43,11 @@ def PILRetrieveImage(img_url, idNum, dirName, cardId, evolveId, hasAudio, status
 	path_to_save = '../../distribution/imcg-waifu-girl-images/scraped-images/'+ hasAudioPath + '/' +str(dirName) +'/' + str(cardId) +'.png'
 	path_to_save_ev = '../../distribution/imcg-waifu-girl-images/scraped-images/' + hasAudioPath + '/' + str(dirName) + '/' + str(cardId) +'_ev.png'
 
-
 	response = requests.get(img_url)
 	img = Image.open(BytesIO(response.content))
 	img.save(path_to_save)
 	img.close()
-
+	
 	if status_num == 3:
 		# There is an evolution from
 		card_url = 'https://starlight.kirara.ca/api/v1/card_t/' + str(evolveId)
@@ -69,7 +68,7 @@ def PILRetrieveImage(img_url, idNum, dirName, cardId, evolveId, hasAudio, status
 		img.close()
 
 	# Below, we insert some code to extract quotes and audio clips
-	extractQuotes(dirName, idNum, cardId, evolveId, hasAudio)
+	extractQuotes(dirName, idNum, cardId, evolveId, hasAudio, True)
 	spriteExtract(dirName, idNum, cardId, evolveId, hasAudio)
 	posterExtract(dirName, idNum, cardId, evolveId, hasAudio)
 
@@ -118,6 +117,7 @@ for x in range(begin, last+1):
 
 		if hasAudio:
 			# These values (baseCardID, evolveID) are flipped to maintain consistancy with javascirpt code
-			print("['" + x_str + "','"+ str(baseCardId)+"','" + dirName.lower() +"','no'],")
-			print("['" + x_str + "','"+ str(evolveId)+"','" + dirName.lower() +"','yes'],")
+			print("['" + x_str + "','"+ str(evolveId)+"','" + dirName.lower() +"','no'],")
+			print("['" + x_str + "','"+ str(baseCardId)+"','" + dirName.lower() +"','yes'],")
+
 
