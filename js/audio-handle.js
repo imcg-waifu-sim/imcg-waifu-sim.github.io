@@ -95,7 +95,7 @@ function outsideSpeak()
 		return;
 	}
 }
-
+/*
 function specialQuoteSpeech()
 {
 	// Activate special quote
@@ -145,7 +145,7 @@ function specialQuoteSpeech()
     return 0;
 
 }
-
+*/
 
 
 function forgotSpeech()
@@ -775,6 +775,7 @@ function isInt(value) {
 
 function nameAssign(name)
 {
+
 	globalWaifu = name;
 	var replacement_name = 'Random ' + capitalizeFirstLetter(name);
 	document.getElementById('random-nameplace').innerHTML = replacement_name;
@@ -950,7 +951,7 @@ function getRandomWaifu()
 	var name = id_log[i][2];
 	var idolized = id_log[i][3];
 	
-	var firstName = name.split('_')[1];
+	
 
 
 	if(idolized == 'no'){
@@ -991,7 +992,13 @@ function getRandomWaifu()
 	document.getElementById("idol_img").src=path;
 	document.getElementById("cardPicImg").src = cardPicPath;
 
-	nameAssign(firstName);
+	if(name.split('_').length < 2)
+	{
+		nameAssign(name);
+	} else {
+		nameAssign(name.split('_')[1]);
+	}
+	
 
 	document.getElementById("card_id").value = id;
 
@@ -1060,14 +1067,19 @@ function getRandomCard()
 		document.querySelector("input[value='no']").checked = true;
 	}
 
-	alert(path);
+	//alert(path);
 
     //file exists
 	document.getElementById("idol_img").src=path;
 
 	document.getElementById("cardPicImg").src = cardPicPath;
 
-	nameAssign(name);
+	if(name.split('_').length < 2)
+	{
+		nameAssign(name);
+	} else {
+		nameAssign(name.split('_')[1]);
+	}
 
 	document.getElementById("card_id").value = id;
 	
@@ -1284,7 +1296,12 @@ function searchId()
 
 	        document.getElementById("cardPicImg").src = cardPicPath;
 
-			nameAssign(name);
+			if(name.split('_').length < 2)
+			{
+				nameAssign(name);
+			} else {
+				nameAssign(name.split('_')[1]);
+			}
 
 			globalIndex = searchIndexById(id, idolized);
 
@@ -1316,7 +1333,12 @@ function changeWaifu(name, id){
 
 	globalIndex = indexFun;
 
-	nameAssign(name);
+	if(name.split('_').length < 2)
+	{
+		nameAssign(name);
+	} else {
+		nameAssign(name.split('_')[1]);
+	}
 	document.getElementById("card_id").value = id;
 
 	if (globalAudio!=null){
@@ -1522,8 +1544,16 @@ function changeWaifu(name, id){
 		    var html_idol = "Idolized: " + capitalizeFirstLetter(id_log[i][3]);
 
 
+		    if(name.split('_').length < 2)
+			{
+				html_name = name;
+			} else {
+				var firstName = capitalizeFirstLetter(name.split('_')[1]);
+				var lastName = capitalizeFirstLetter(name.split('_')[0])
+				html_name = 'Name: ' + lastName + ' ' + firstName;
+			}
 
-
+		    
 
 		    document.getElementById("id-saved-1").innerHTML = html_id;
 		    document.getElementById("name-saved-1").innerHTML = html_name;
@@ -1549,6 +1579,15 @@ function changeWaifu(name, id){
 		    var html_idol = "Idolized: " + capitalizeFirstLetter(id_log[i][3]);
 
 
+		    if(name.split('_').length < 2)
+			{
+				html_name = name;
+			} else {
+				var firstName = capitalizeFirstLetter(name.split('_')[1]);
+				var lastName = capitalizeFirstLetter(name.split('_')[0])
+				html_name = 'Name: ' + lastName + ' ' + firstName;
+			}
+
 
 		    document.getElementById("id-saved-2").innerHTML = html_id;
 		    document.getElementById("name-saved-2").innerHTML = html_name;
@@ -1573,6 +1612,15 @@ function changeWaifu(name, id){
 		    var html_name = "Name: " + name;
 		    var html_idol = "Idolized: " + capitalizeFirstLetter(id_log[i][3]);
 
+
+		    if(name.split('_').length < 2)
+			{
+				html_name = name;
+			} else {
+				var firstName = capitalizeFirstLetter(name.split('_')[1]);
+				var lastName = capitalizeFirstLetter(name.split('_')[0])
+				html_name = 'Name: ' + lastName + ' ' + firstName;
+			}
 
 		    document.getElementById("id-saved-3").innerHTML = html_id;
 		    document.getElementById("name-saved-3").innerHTML = html_name;

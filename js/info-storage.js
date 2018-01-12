@@ -27,7 +27,7 @@ function setCookie(cname, cvalue, exdays) {
     d.setTime(d.getTime() + (exdays*24*60*60*1000));
     var expires = "expires="+ d.toUTCString();
     document.cookie = cname + "=" + cvalue + "; " + expires;
-    alert()
+    
 }
 
 function getCookie(cname) {
@@ -63,7 +63,7 @@ function deleteCookie(name) {
 
 function checkCookie() {
     var index=getCookie("waifu-index");
-    alert(index);
+    
     globalIndex = index;
     if (index != null && index != "" && !isNaN(index)) {
         mainWaifuSet(index);
@@ -120,6 +120,7 @@ function checkWaifuLoadCookie(but_id) {
     var index2=getCookie("saved-waifu-index-2");
     var index3=getCookie("saved-waifu-index-3");
 
+    globalIndex = 0;
 
     if (index != null && index != "" && !isNaN(index)) {
 
@@ -149,7 +150,7 @@ function checkWaifuLoadCookie(but_id) {
         }
             
     } 
-    globalIndex = 0;
+    
 }
 
 
@@ -164,7 +165,7 @@ function checkWaifuLoadCookie(but_id) {
 function storeCookie(index)
 {
 
-    setCookie("waifu-index", index, cookieExpireDate);
+    setCookie("waifu-index", index, true);
 }
 
 function storeBGMusicCookie(index)
@@ -247,7 +248,12 @@ function mainWaifuSet(index)
     document.getElementById("idol_img").src=path;
     document.getElementById("cardPicImg").src = cardPicPath;
 
-    nameAssign(name);
+    if(name.split('_').length < 2)
+    {
+        nameAssign(name);
+    } else {
+        nameAssign(name.split('_')[1]);
+    }
     document.getElementById("card_id").value = id;
 
     if (globalAudio!=null){
@@ -302,10 +308,7 @@ function savedWaifuLoad(index)
     //var scrapePath = "../distribution/imcg-waifu-girl-images/scraped-images/audio/";
     var cardPicPath = "https://imcg-waifu-sim.github.io/imcg-waifu-girl-images/scraped-images/audio/"
 
-    if(isOthers(name)){
-        scrapePath = "https://llsif-waifu-sim.github.io/llsif-waifu-girl-images/scraped-images/z-others/"
-        cardPicPath = "https://llsif-waifu-sim.github.io/llsif-waifu-card-pics/scraped-images/z-others/"
-    } 
+
 
     var idNormal = convertToNormalForm(id, idolized);
     //alert(idNormal);
@@ -321,13 +324,18 @@ function savedWaifuLoad(index)
         cardPicPath = cardPicPath + name +  "/" + idNormal + ".png";
         document.querySelector("input[value='no']").checked = true;
     }
-    //alert(path);
+
 
     //file exists
     document.getElementById("idol_img").src=path;
     document.getElementById("cardPicImg").src = cardPicPath;
 
-    nameAssign(name);
+    if(name.split('_').length < 2)
+    {
+        nameAssign(name);
+    } else {
+        nameAssign(name.split('_')[1]);
+    }
     document.getElementById("card_id").value = id;
 
     if (globalAudio!=null){
@@ -342,76 +350,6 @@ function savedWaifuLoad(index)
 }
 
 
-
-
-
-
-
-
-
-
-// Functions that the cookie functions may need
-function getFullName(name)
-{
-    if(name == 'honoka')
-    {
-        return 'Kousaka Honoka';
-    } else if(name == 'kotori'){
-        return 'Minami Kotori';
-    }else if(name == 'umi'){
-        return 'Sonoda Umi';
-    } else if(name == 'hanayo'){
-        return 'Koizumi Hanayo';
-    } else if(name == 'rin'){
-        return 'Hoshizora Rin';
-    } else if(name == 'maki'){
-        return 'Nishikino Maki';
-    } else if(name == 'nozomi'){
-        return 'Tojo Nozomi';
-    } else if(name == 'eli'){
-        return 'Ayase Eli';
-    } else if(name == 'nico'){
-        return 'Yazawa Nico';
-
-
-    } else if (name == 'chika'){
-        return 'Takami Chika';
-    } else if(name == 'you'){
-        return 'Watanabe You';
-    }else if(name == 'riko'){
-        return 'Sakurauchi Riko';
-    } else if(name == 'ruby'){
-        return 'Kurosawa Ruby';
-    } else if(name == 'hanamaru'){
-        return 'Kunikida Hanamaru';
-    } else if(name == 'yoshiko'){
-        return 'Tsushima Yoshiko';
-    } else if(name == 'dia'){
-        return 'Kurosawa Dia';
-    } else if(name == 'mari'){
-        return 'Ohara Mari';
-    } else if(name == 'kanan'){
-        return 'Matssura Kanan';
-
-
-    } else if(name == 'tsubasa'){
-        return 'Kira Tsubasa';
-    } else if(name == 'anju'){
-        return 'Yuki Anju';
-    } else if(name == 'erena'){
-        return 'Todo Erena';
-
-
-    // For the other characters
-    } else if(name == 'shiitake'){
-        return 'Shiitake';
-    } else if(name == 'alpaca'){
-        return 'Alpaca';
-
-    } else {
-        return 'none';
-    } 
-}
 
 function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
