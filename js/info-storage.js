@@ -1,5 +1,5 @@
-var voiceVolume = 0.3;
-var musicVolume = 0.3;
+var voiceVolume = 0.4;
+var musicVolume = 0.2;
 var background = 0;
 var globalIndex = 0;
 var backgroundMusic = 1;

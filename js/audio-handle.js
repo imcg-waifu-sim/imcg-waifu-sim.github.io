@@ -702,13 +702,12 @@ function playBackgroundMusic()
 	audio.play();
 }
 
+/*
 function changeBGMusic()
 {
 	var bgmusic = document.getElementById("bgmusicselect").value;
 	var audio = document.getElementById("origin-music-player");
-
 	audio.pause();
-
 	if(bgmusic == 0)
 	{
 		// Muse background music
@@ -718,10 +717,10 @@ function changeBGMusic()
 		// Aqours background music
 		audio.src = 'audio/background-music1.mp3';
 		storeBGMusicCookie('AQ');
-
 	}
 	audio.play();
 }
+*/
 
 function changeBackground()
 {	
