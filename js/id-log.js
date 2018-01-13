@@ -642,8 +642,6 @@ var id_log =
 ['267','300317','jougasaki_mika','yes'],
 ['267','300428','jougasaki_mika','no'],
 ['267','300427','jougasaki_mika','yes'],
-['267','300027','jougasaki_mika','no'],
-['267','300028','jougasaki_mika','yes'],
 ['268','300058','jougasaki_rika','no'],
 ['268','300057','jougasaki_rika','yes'],
 ['268','300108','jougasaki_rika','no'],
