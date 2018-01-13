@@ -1,7 +1,7 @@
 // THIS IS FOR IDOLMASTER CINDERELLA GIRLS
 
 var globalAudio = null;
-var globalWaifu = 'honoka';
+var globalWaifu = 'uzuki';
 //var maxNumOfCard = id_log[id_log.length-1][0];
 var language = 'english';
 var maxNumBackground = 126;
@@ -651,6 +651,8 @@ function timeSpeech()
 }
 
 
+
+
 window.onload = function() {
 	backgroundAudio=document.getElementById("origin-music-player");
 
@@ -662,6 +664,8 @@ window.onload = function() {
 	checkBGMCookie();
 	checkVolumeCookie();
 
+	rearrangeIDAr = id_log.slice();
+	
 	backgroundAudio.volume= musicVolume;
 	backgroundAudio.play();
 
@@ -792,130 +796,16 @@ function waifuRNG()
 
 function getWaifuAr(name)
 {
-	var newArray = [];
+	// Searches main
+	return id_log.filter(id_log => id_log[2] == name);
 
-	if(name == 'ruby')
-	{
-		for (var i = 0; i < ruby_ar.length; i++){
-		    newArray[i] = ruby_ar[i].slice();
-		}
-	} else if(name== 'hanamaru'){
-		for (var i = 0; i < hanamaru_ar.length; i++){
-		    newArray[i] = hanamaru_ar[i].slice();
-		}
-	} else if(name== 'yoshiko'){
-		for (var i = 0; i < yoshiko_ar.length; i++){
-		    newArray[i] = yoshiko_ar[i].slice();
-		}
-	} else if(name== 'chika'){
-		for (var i = 0; i < chika_ar.length; i++){
-		    newArray[i] = chika_ar[i].slice();
-		}
-	} else if(name== 'you'){
-		for (var i = 0; i < you_ar.length; i++){
-		    newArray[i] = you_ar[i].slice();
-		}
-	} else if(name== 'riko'){
-		for (var i = 0; i < riko_ar.length; i++){
-		    newArray[i] = riko_ar[i].slice();
-		}
-	} else if(name== 'dia'){
-		for (var i = 0; i < dia_ar.length; i++){
-		    newArray[i] = dia_ar[i].slice();
-		}
-	} else if(name== 'mari'){
-		for (var i = 0; i < mari_ar.length; i++){
-		    newArray[i] = mari_ar[i].slice();
-		}
-	} else if(name== 'kanan'){
-		for (var i = 0; i < kanan_ar.length; i++){
-		    newArray[i] = kanan_ar[i].slice();
-		}
-
-	} else if(name== 'hanayo'){
-		for (var i = 0; i < hanayo_ar.length; i++){
-		    newArray[i] = hanayo_ar[i].slice();
-		}
-	} else if(name== 'maki'){
-		for (var i = 0; i < maki_ar.length; i++){
-		    newArray[i] = maki_ar[i].slice();
-		}
-	} else if(name== 'rin'){
-		for (var i = 0; i < rin_ar.length; i++){
-		    newArray[i] = rin_ar[i].slice();
-		}
-	} else if(name== 'honoka'){
-		for (var i = 0; i < honoka_ar.length; i++){
-		    newArray[i] = honoka_ar[i].slice();
-		}
-	} else if(name== 'umi'){
-		for (var i = 0; i < umi_ar.length; i++){
-		    newArray[i] = umi_ar[i].slice();
-		}
-	} else if(name== 'kotori'){
-		for (var i = 0; i < kotori_ar.length; i++){
-		    newArray[i] = kotori_ar[i].slice();
-		}
-	} else if(name== 'eli'){
-		for (var i = 0; i < eli_ar.length; i++){
-		    newArray[i] = eli_ar[i].slice();
-		}
-	} else if(name== 'nico'){
-		for (var i = 0; i < nico_ar.length; i++){
-		    newArray[i] = nico_ar[i].slice();
-		}
-	} else if(name== 'nozomi'){
-		for (var i = 0; i < nozomi_ar.length; i++){
-		    newArray[i] = nozomi_ar[i].slice();
-		}
-	
-
-
-
-
-
-
-
-
-	} else if(name== 'tsubasa'){
-		for (var i = 0; i < tsubasa_ar.length; i++){
-		    newArray[i] = tsubasa_ar[i].slice();
-		}
-	} else if(name== 'anju'){
-		for (var i = 0; i < anju_ar.length; i++){
-		    newArray[i] = anju_ar[i].slice();
-		}
-	} else if(name== 'erena'){
-		for (var i = 0; i < erena_ar.length; i++){
-		    newArray[i] = erena_ar[i].slice();
-		}
-
-
-
-    // OTHERS
-	} else if (name== 'shiitake'){
-		return ['1022','shiitake','yes'];
-
-	} else if (name== 'alpaca'){
-		for (var i = 0; i < alpaca_ar.length; i++){
-		    newArray[i] = alpaca_ar[i].slice();
-		}
-
-	} else {
-		alert('getWaifuAr() has failed');
-		return null;
-	} 
-
-
-
-	return newArray;
 }
 
 
 function cardRNG()
 {
-	var temp_ar = getWaifuAr(globalWaifu);
-
+	var name = id_log[globalIndex][2];
+	var temp_ar = getWaifuAr(name);
 	var maxNum = temp_ar.length;
 
 
@@ -923,8 +813,8 @@ function cardRNG()
 	
 	var temp_index = n;
 
-	var temp_id = temp_ar[temp_index][0];
-	var temp_idolized = temp_ar[temp_index][2];
+	var temp_id = temp_ar[temp_index][1];
+	var temp_idolized = temp_ar[temp_index][3];
 
 
 	// Get the index from the main id_log array
@@ -1032,8 +922,9 @@ function getRandomCard()
 	*/
 
 
-	//var i = cardRNG(); 
-	i = 2;
+	var i = cardRNG(); 
+
+	//i = 2;
 
 
 	var id = parseInt(id_log[i][1]);
@@ -1163,13 +1054,8 @@ function searchIndexById(id, idolized)
 			} 
 
 
-			// During normal conditions
-			if(idolized == 'yes' && ( id_log[i][1] == id.toString() )){
-				return i;
-			} else{
-				// If not idolized
-				return i-1;
-			}
+			return i
+
 		}
 	}
 	return 'none';
@@ -1202,7 +1088,7 @@ function convertToNormalForm(id, idolized)
 	{
 		if(id_log[i][1] == id.toString())
 		{
-			// We found one of the id (possible it is 100102)
+
 
 			//alert(id_log[i]);
 			if(idolized == 'no' && id_log[i][3] == 'no'){
