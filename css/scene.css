@@ -66,8 +66,11 @@
     width: auto;
     height: 560px;
 
+
+    left: 0;
     bottom: 0%;
-    left: 6.5%;
+    right: 0;
+    margin: auto;
  
     
 }
