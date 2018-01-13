@@ -817,8 +817,9 @@ function cardRNG()
 	var temp_idolized = temp_ar[temp_index][3];
 
 
+	//alert(temp_ar[temp_index]);
 	// Get the index from the main id_log array
-	return searchIndexById(temp_id, temp_idolized);
+	return searchIndexByIdChangeWaifu(temp_id, temp_idolized);
 
 }
 
@@ -1037,6 +1038,31 @@ function searchNameById(id)
 }
 
 
+function searchIndexByIdChangeWaifu(id, idolized)
+{
+	var i;
+
+	for(i = 0; i < id_log.length; i++)
+	{
+		if(id_log[i][1] == id.toString())
+		{
+			
+			
+			// If we are at the end of the array, no need to check if there is anything a step further
+			if(i == id_log.length - 1) 
+			{
+				return i;
+			} 
+
+			return i;
+
+		}
+	}
+	return 'none';
+}
+
+
+
 function searchIndexById(id, idolized)
 {
 	var i;
@@ -1054,7 +1080,18 @@ function searchIndexById(id, idolized)
 			} 
 
 
-			return i
+
+			
+			// During normal conditions
+			if(idolized == 'yes'){
+				return i;
+			} else{
+				// If not idolized
+				return i-1;
+			}
+			
+
+
 
 		}
 	}
@@ -1081,8 +1118,7 @@ function convertToNormalForm(id, idolized)
 {
 	
 	var i;
-	//alert(id);
-	//alert(idolized);
+
 
 	for(i = 0; i < id_log.length; i++)
 	{
