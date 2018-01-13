@@ -16,7 +16,7 @@ function printPhotoCanvas(backgroundpath){
 
 
     ctx.drawImage(img, 0, 0, img.width,img.height); 
-    ctx.drawImage(imgwaifu, (img.width - imgwaifu.width) / 2, 140, imgwaifu.width, imgwaifu.height);
+    ctx.drawImage(imgwaifu, (img.width - imgwaifu.width) / 2, (img.height - imgwaifu.height), imgwaifu.width, imgwaifu.height);
     ctx.drawImage(speechbubble, 0, 0, speechbubble.width, speechbubble.height);
 
 

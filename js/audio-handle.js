@@ -168,7 +168,7 @@ function forgotSpeech()
 
     var pathString = "".concat(audioPath, waifuName, file);
     changeSpeechText(pathString, n);
-    refreshBubble();
+    //refreshBubble();
 
 
 }
@@ -324,7 +324,7 @@ function seasonSpeech()
 
 	var pathString = "".concat(audioPath, waifuName, file);
 	changeSpeechText(pathString, n);
-	refreshBubble();
+	//refreshBubble();
 }
 
 
@@ -377,7 +377,7 @@ function eventSpeechSound(f,maxNum){
 	// Add text
 	var pathString = "".concat(audioPath, waifuName, file);
 	changeSpeechText(pathString, txtIndex);
-	refreshBubble();
+	//refreshBubble();
 }
 
 
@@ -646,7 +646,7 @@ function timeSpeech()
 
 	var pathString = "".concat(audioPath, waifuName, file);
 	changeSpeechText(pathString, n);
-	refreshBubble();
+	//refreshBubble();
 
 }
 
@@ -1425,7 +1425,7 @@ function changeWaifu(name, id){
 			var pathString = "".concat(audioPath, waifuName, file);
 
 			changeSpeechText(pathString, n);
-			refreshBubble();
+			//refreshBubble();
 
 			return;
 		}
@@ -1447,7 +1447,7 @@ function changeWaifu(name, id){
 
 
 		changeSpeechText(pathString, n);
-		refreshBubble();
+		//refreshBubble();
 
 	}
 
