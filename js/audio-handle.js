@@ -706,7 +706,7 @@ function playBackgroundMusic()
 	audio.play();
 }
 
-/*
+
 function changeBGMusic()
 {
 	var bgmusic = document.getElementById("bgmusicselect").value;
@@ -714,17 +714,24 @@ function changeBGMusic()
 	audio.pause();
 	if(bgmusic == 0)
 	{
-		// Muse background music
 		audio.src = 'audio/background-music.mp3';
-		storeBGMusicCookie('MU');
+		storeBGMusicCookie('0');
 	} else if(bgmusic == 1){
-		// Aqours background music
-		audio.src = 'audio/background-music1.mp3';
-		storeBGMusicCookie('AQ');
+		audio.src = 'audio/studio-music-0.mp3';
+		storeBGMusicCookie('1');
+	} else if(bgmusic == 2){
+		audio.src = 'audio/studio-music-1.mp3';
+		storeBGMusicCookie('2');
+	} else if(bgmusic == 3){
+		audio.src = 'audio/studio-music-2.mp3';
+		storeBGMusicCookie('3');
+	}  else {
+		audio.src = 'audio/background-music.mp3';
+		storeBGMusicCookie('0');
 	}
 	audio.play();
 }
-*/
+
 
 function changeBackground()
 {	

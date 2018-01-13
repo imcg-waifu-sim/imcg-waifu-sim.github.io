@@ -77,17 +77,32 @@ function checkCookie() {
 function checkBGMCookie() {
     var index=getCookie("background-music");
     if (index != null && index != "") {
-        if(index == 'MU')
+        if(index == '0')
         {
             document.getElementById("bgmusicselect").value = "0";
             var audio = document.getElementById("origin-music-player");
             audio.src = 'audio/background-music.mp3';
             backgroundMusic = 0;
-        } else {
+        } else if (index == '1'){
             document.getElementById("bgmusicselect").value = "1";
             var audio = document.getElementById("origin-music-player");
-            audio.src = 'audio/background-music1.mp3';
+            audio.src = 'audio/studio-music-0.mp3';
             backgroundMusic = 1;
+        } else if (index == '2'){
+            document.getElementById("bgmusicselect").value = "2";
+            var audio = document.getElementById("origin-music-player");
+            audio.src = 'audio/studio-music-1.mp3';
+            backgroundMusic = 1;
+        } else if (index == '3'){
+            document.getElementById("bgmusicselect").value = "3";
+            var audio = document.getElementById("origin-music-player");
+            audio.src = 'audio/studio-music-2.mp3';
+            backgroundMusic = 1;
+        } else {
+            document.getElementById("bgmusicselect").value = "0";
+            var audio = document.getElementById("origin-music-player");
+            audio.src = 'audio/background-music.mp3';
+            backgroundMusic = 0;
         }
     } 
 }
