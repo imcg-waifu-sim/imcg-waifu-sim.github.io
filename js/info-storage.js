@@ -365,7 +365,7 @@ function savedWaifuLoad(index)
 
     var scrapePath = "https://imcg-waifu-sim.github.io/imcg-waifu-girl-images/scraped-images/audio/";
     //var scrapePath = "../distribution/imcg-waifu-girl-images/scraped-images/audio/";
-    var cardPicPath = "https://imcg-waifu-sim.github.io/imcg-waifu-girl-images/scraped-images/audio/"
+    //var cardPicPath = "https://imcg-waifu-sim.github.io/imcg-waifu-girl-images/scraped-images/audio/"
 
 
 
@@ -376,11 +376,11 @@ function savedWaifuLoad(index)
     if(idolized == 'yes')
     {
         path = scrapePath + name + "/" + idNormal + "_ev.png";
-        cardPicPath = cardPicPath + name + "/" + idNormal + "_ev.png";
+        //cardPicPath = cardPicPath + name + "/" + idNormal + "_ev.png";
         document.querySelector("input[value='yes']").checked = true;
     }else{
         path = scrapePath + name +  "/" + idNormal + ".png";
-        cardPicPath = cardPicPath + name +  "/" + idNormal + ".png";
+        //cardPicPath = cardPicPath + name +  "/" + idNormal + ".png";
         document.querySelector("input[value='no']").checked = true;
     }
 
@@ -404,13 +404,13 @@ function savedWaifuLoad(index)
         }
 
         document.getElementById("homeScreen").src=backpath;
-        document.getElementById("idol_img").src='';
+        document.getElementById("idol_img").src='./images/blank.png';
     } else {
         // if they are off or there is no character background (default card)
         
         var backpath = 'images/background/background' + background.toString() + '.png';
         document.getElementById("idol_img").src=path;
-        document.getElementById("cardPicImg").src = cardPicPath;
+        //document.getElementById("cardPicImg").src = cardPicPath;
         document.getElementById("homeScreen").src=backpath;
 
     }
