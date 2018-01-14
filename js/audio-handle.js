@@ -698,7 +698,7 @@ function charBackgroundToggleOn()
 	var evolved = id_log[globalIndex][3];
 	var subMain = id_log[globalIndex][4];
 
-	
+
 
 	if(subMain == 'sub'){
 		var backpath = ''
@@ -1806,11 +1806,11 @@ function changeWaifu(name){
         client.open("GET", pathString, true);
         client.send();
 
-        /*
+        
 		if(enTransOn){
 			changeSpeechTextEn(path, n);
 		}
-		*/
+		
 
     }
 
@@ -1818,7 +1818,7 @@ function changeWaifu(name){
 		var pathStringEn;
 
 		pathStringEn = "".concat(path, "quote_en.txt");
-
+		
 
 		//alert(pathString);
 

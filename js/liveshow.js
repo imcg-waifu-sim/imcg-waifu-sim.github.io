@@ -157,7 +157,7 @@ function playClick()
 
 
 		var songPath = "".concat("https://raw.githubusercontent.com/imcg-waifu-sim/imcg-waifu-songs-mp3/master/songs-mp3/",subPath, currSong, ".mp3");
-		var picPath = "".concat("./images/album-covers/",subPath, currSong, ".png");
+		var picPath = "".concat("./images/album-covers/",subPath, currSong, ".jpg");
 		
 		
 		currplayingSong = currSong;
@@ -236,7 +236,7 @@ function changeSong()
 			currSong = currSong + 1;
 		}
 
-		var picPath = "".concat("./images/album-covers/",subPath, currSong, ".png");
+		var picPath = "".concat("./images/album-covers/",subPath, currSong, ".jpg");
 		$(document).ready(function(){
 			$("#liveshowAlbum").hide();
 			document.getElementById("liveshowAlbum").src =  picPath;
@@ -283,7 +283,7 @@ function changeSong()
 
 		var randSongInt = calc_random_local_index(chosenNum, folder);
 
-		var picPath = "".concat("./images/album-covers/",subPath, randSongInt, ".png");
+		var picPath = "".concat("./images/album-covers/",subPath, randSongInt, ".jpg");
 		
 		$(document).ready(function(){
 			$("#liveshowAlbum").hide();
@@ -330,7 +330,7 @@ function changeSongBack()
 		}
 		
 
-		var picPath = "".concat("./images/album-covers/",subPath, currSong, ".png");
+		var picPath = "".concat("./images/album-covers/",subPath, currSong, ".jpg");
 
 		$(document).ready(function(){
 			$("#liveshowAlbum").hide();
@@ -366,11 +366,11 @@ function changeSongBack()
 		changeCategoryRandom();
 		
 		if(folder==0){
-			subPath = 'muse-together/';
+			subPath = 'cg-together/';
 		} else if (folder==1){
-			subPath = 'muse-sub-group/';
+			subPath = 'cg-sub-group/';
 		} else if (folder==2){
-			subPath = 'muse-individual/';
+			subPath = 'cg-individual/';
 		} else if (folder==3){
 			subPath = 'aqours-together/';
 		} else if (folder==4){
@@ -385,7 +385,7 @@ function changeSongBack()
 		}
 
 		var randSongInt = calc_random_local_index(chosenNum, folder);
-		var picPath = "".concat("./images/album-covers/",subPath, randSongInt, ".png");
+		var picPath = "".concat("./images/album-covers/",subPath, randSongInt, ".jpg");
 		
 		$(document).ready(function(){
 			$("#liveshowAlbum").hide();
@@ -430,11 +430,11 @@ function changeSongRandom(){
 
 
 	if(folder==0){
-		subPath = 'muse-together/';
+		subPath = 'cg-together/';
 	} else if (folder==1){
-		subPath = 'muse-sub-group/';
+		subPath = 'cg-sub-group/';
 	} else if (folder==2){
-		subPath = 'muse-individual/';
+		subPath = 'cg-individual/';
 	} else if (folder==3){
 		subPath = 'aqours-together/';
 	} else if (folder==4){
@@ -448,7 +448,7 @@ function changeSongRandom(){
 		return;
 	}
 	var randSongInt = calc_random_local_index(chosenNum, folder);
-	var picPath = "".concat("./images/album-covers/",subPath, randSongInt, ".png");
+	var picPath = "".concat("./images/album-covers/",subPath, randSongInt, ".jpg");
 	
 	$(document).ready(function(){
 		$("#liveshowAlbum").hide();
@@ -473,7 +473,7 @@ function changeCategory()
 	{
 		// Muse all together
 		numOfSongs = numOfSongsMuseAll;
-		subPath = 'muse-together/';
+		subPath = 'cg-together/';
 		songlist_ar = muse_together_ar;
 
 		currcategoryID = 0;
@@ -481,45 +481,17 @@ function changeCategory()
 	} else if (categoryID == 1){
 		// Muse sub group
 		numOfSongs = numOfSongsMuseSub;
-		subPath = 'muse-sub-group/';
+		subPath = 'cg-sub-group/';
 		songlist_ar = muse_subgroup_ar;
 
 		currcategoryID = 1;
 	}else if (categoryID == 2){
 		// Muse others
 		numOfSongs = numOfSongsMuseOther;
-		subPath = 'muse-individual/';
+		subPath = 'cg-individual/';
 		songlist_ar = muse_individual_ar;
 
 		currcategoryID = 2;
-	}else if (categoryID == 3){
-		// Aqours all together
-		numOfSongs = numOfSongsAqoursTogether;
-		subPath = 'aqours-together/';
-		songlist_ar = aqours_together;
-
-		currcategoryID = 3;
-	}else if (categoryID == 4){
-		// Aqours all together
-		numOfSongs = numOfSongsAqoursSub;
-		subPath = 'aqours-sub-group/';
-		songlist_ar = aqours_subgroup_ar;
-
-		currcategoryID = 4;
-	}else if (categoryID == 5){
-		// Aqours all together
-		numOfSongs = numOfSongsAqoursOthers;
-		subPath = 'aqours-individual/';
-		songlist_ar = aqours_others_ar;
-
-		currcategoryID = 5;
-	}else if (categoryID == 6){
-		// Aqours all together
-		numOfSongs = numOfSongsIdolsOthers;
-		subPath = 'other-idols/';
-		songlist_ar = idol_others_ar;
-
-		currcategoryID = 6;
 	} else {
 		alert('Something went wrong in changeCategory()')
 	}
@@ -576,7 +548,7 @@ function changeCategoryRandom()
 	{
 		// Muse all together
 		numOfSongs = numOfSongsMuseAll;
-		subPath = 'muse-together/';
+		subPath = 'cg-together/';
 		songlist_ar = muse_together_ar;
 
 		currcategoryID = 0;
@@ -584,45 +556,17 @@ function changeCategoryRandom()
 	} else if (categoryID == 1){
 		// Muse sub group
 		numOfSongs = numOfSongsMuseSub;
-		subPath = 'muse-sub-group/';
+		subPath = 'cg-sub-group/';
 		songlist_ar = muse_subgroup_ar;
 
 		currcategoryID = 1;
 	}else if (categoryID == 2){
 		// Muse others
 		numOfSongs = numOfSongsMuseOther;
-		subPath = 'muse-individual/';
+		subPath = 'cg-individual/';
 		songlist_ar = muse_individual_ar;
 
 		currcategoryID = 2;
-	}else if (categoryID == 3){
-		// Aqours all together
-		numOfSongs = numOfSongsAqoursTogether;
-		subPath = 'aqours-together/';
-		songlist_ar = aqours_together;
-
-		currcategoryID = 3;
-	}else if (categoryID == 4){
-		// Aqours all together
-		numOfSongs = numOfSongsAqoursSub;
-		subPath = 'aqours-sub-group/';
-		songlist_ar = aqours_subgroup_ar;
-
-		currcategoryID = 4;
-	}else if (categoryID == 5){
-		// Aqours all together
-		numOfSongs = numOfSongsAqoursOthers;
-		subPath = 'aqours-individual/';
-		songlist_ar = aqours_others_ar;
-
-		currcategoryID = 5;
-	}else if (categoryID == 6){
-		// Aqours all together
-		numOfSongs = numOfSongsIdolsOthers;
-		subPath = 'other-idols/';
-		songlist_ar = idol_others_ar;
-
-		currcategoryID = 6;
 	} else {
 		alert('Something went wrong in changeCategory()')
 	}
@@ -698,12 +642,8 @@ function generate_random_ar(){
 	// Generate array that will store all songs of Love Live	
 	var temp0 = muse_together_ar.concat(muse_subgroup_ar);
 	var temp1 = temp0.concat(muse_individual_ar);
-	var temp2 = temp1.concat(aqours_together);
-	var temp3 = temp2.concat(aqours_subgroup_ar);
-	var temp4 = temp3.concat(aqours_others_ar);
-	var temp5 = temp4.concat(idol_others_ar);
 
-	return temp5;
+	return temp1;
 }
 
 function generateRandomSongArray()
