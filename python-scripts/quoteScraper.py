@@ -245,7 +245,6 @@ def spriteExtract(dirName, charID, cardID, cardIDEv, hasAudio):
 					path_to_save_ev = '../../distribution/imcg-waifu-girl-images/scraped-images/'+ hasAudioPath + '/' +str(dirName) +'/' + str(cardID) +'_ev.png'
 					response = requests.get(normURL)
 
-					'''
 					if response.status_code == 404:
 						continue
 
@@ -261,7 +260,6 @@ def spriteExtract(dirName, charID, cardID, cardIDEv, hasAudio):
 					img = Image.open(BytesIO(response.content))
 					img.save(path_to_save_ev)
 					img.close()
-					'''
 
 					'''
 					print(normURL)
@@ -269,6 +267,37 @@ def spriteExtract(dirName, charID, cardID, cardIDEv, hasAudio):
 					print('')
 					'''
 
+
+
+def printSubCards(dirName, charID, cardID, cardIDEv, hasAudio):
+
+
+	# Extract sprites
+	charID = str(charID)
+
+	urlRead = 'https://starlight.kirara.ca/char/'+charID
+	r = urllib.urlopen(urlRead).read()
+	soup = BeautifulSoup(r,"html.parser")
+	body = soup.find('body')
+
+	divAr = body.findAll('div')
+	
+	for div in divAr:
+		hasAudioPath = 'no-audio'
+		if hasAudio:
+			hasAudioPath = 'audio'
+
+		if div['class'][0] == 'hang_inside':
+		
+			aAr = div.findAll('a')
+			
+			for a in aAr:
+				# To get the cardID
+				if a.text == 'Petit sprite':
+					cardID = a['href'].split('/')[-1].split('.')[0]
+					
+					print("['" + charID + "','"+ str(int(cardID)+1) +"','" + dirName.lower() +"','no','sub'],")
+					print("['" + charID + "','"+ cardID+"','" + dirName.lower() +"','yes','sub'],")
 
 
 
@@ -319,7 +348,7 @@ def posterExtract(dirName, charID, cardID, cardIDEv, hasAudio):
 
 			if hasAudio:
 
-                        	print("['" + charID + "','"+ cardID+"','" + dirName.lower() +"','yes'],")
+                        	print("['" + charID + "','"+ cardID+"','" + dirName.lower() +"','yes','sub'],")
 
 
 				extractQuotes(dirName, charID, cardID, cardIDEv, hasAudio, True)
@@ -343,7 +372,7 @@ def posterExtract(dirName, charID, cardID, cardIDEv, hasAudio):
 
 
 			if hasAudio:
-				print("['" + charID + "','"+ cardID+"','" + dirName.lower() +"','no'],")
+				print("['" + charID + "','"+ cardID+"','" + dirName.lower() +"','no','sub'],")
 				extractQuotes(dirName, charID, cardID, cardIDEv, hasAudio, True)
 
 

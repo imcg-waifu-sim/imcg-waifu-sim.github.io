@@ -96,57 +96,6 @@ function outsideSpeak()
 		return;
 	}
 }
-/*
-function specialQuoteSpeech()
-{
-	// Activate special quote
-	var audioPath = "https://raw.githubusercontent.com/llsif-waifu-sim/llsif-waifu-special-quotes/master/special-quotes/";
-	var simpleAudioPath = "special-quotes/";
-	var id = id_log[globalIndex
-	][0];
-
-	var indexAr = searchQuoteIndexByID(id);
-
-	var chosenIndex = indexAr[0];
-	var maxIndex = indexAr[1]; 
-
-
-	// If the card does not have a special quote
-	if (chosenIndex == -1)
-	{
-		return -1;
-	}
-
-	// Special case for A-RISE
-	if(id == '837' || id == '838' || id == '839')
-	{
-		// For some reason, we have special quotes which are untranslated, so let's skip them
-		return -1;
-	}
-
-
-	var addValue = Math.floor(Math.random() * maxIndex);
-	
-	
-
-	var filePath = "".concat(id,"-", addValue.toString());
-	var superString = "".concat(audioPath, "audio/" , filePath, ".mp3");
-
-
-	globalAudio = new Audio(superString);
-    globalAudio.volume = voiceVolume;
-    globalAudio.play();
-
-
-    var fileIndex = chosenIndex  + addValue;
-    var pathString = "".concat(simpleAudioPath);
-    changeSpeechText(pathString, fileIndex);
-    refreshBubble();
-
-    return 0;
-
-}
-*/
 
 
 function forgotSpeech()
@@ -172,58 +121,6 @@ function forgotSpeech()
 
 
 }
-/*
-function forgetWaifuLoad(index)
-{
-
-    var id = parseInt(id_log[index][1]);
-    var name = id_log[index][2];
-    var idolized = id_log[index][3];
-
-
-    // Once we get the info, get the image
-    var path;
-
-    var scrapePath = "https://llsif-waifu-sim.github.io/llsif-waifu-girl-images/scraped-images/";
-	var cardPicPath = "https://llsif-waifu-sim.github.io/llsif-waifu-card-pics/scraped-images/"
-
-	if(isOthers(name)){
-		scrapePath = "https://llsif-waifu-sim.github.io/llsif-waifu-girl-images/scraped-images/z-others/"
-		cardPicPath = "https://llsif-waifu-sim.github.io/llsif-waifu-card-pics/scraped-images/z-others/"
-	} 
-
-	
-	// If talking about Muse & Aqours
-	if(idolized == 'yes')
-	{
-		path = scrapePath + name + "/" + id + "_id.png";
-		cardPicPath = cardPicPath + name + "/" + id + "_id.png";
-		document.querySelector("input[value='yes']").checked = true;
-	}else{
-		path = scrapePath + name +  "/" + id + ".png";
-		cardPicPath = cardPicPath + name +  "/" + id + ".png";
-		document.querySelector("input[value='no']").checked = true;
-	}
-
-
-
-
-    //file exists
-    document.getElementById("idol_img").src=path;
-    document.getElementById("cardPicImg").src = cardPicPath;
-
-    nameAssign(name);
-    document.getElementById("card_id").value = id;
-
-    if (globalAudio!=null){
-        globalAudio.pause();
-    }
-
-  
-
-
-}
-*/
 
 function enableOutside()
 {
@@ -241,8 +138,6 @@ function changeWaifuLoadRandom() {
     {
     	return -1;
     }
-
-
 
     var nums = [1,2,3],
     ranNums = [],
@@ -274,12 +169,6 @@ function changeWaifuLoadRandom() {
 	    
 	    nums.splice(j,1);
 	}
-
-
-
-
-
-     
 
     return -1;
 }
@@ -650,8 +539,61 @@ function timeSpeech()
 
 }
 
+function removeOccIDAr(useAR) {
+    var arr = [];
+    var tempAr = [];
+    for(var i = 0; i < useAR.length; i++) {
+        if(!tempAr.includes(useAR[i][2])) {
+
+        	tempAr.push(useAR[i][2]);
+
+        	if(useAR[i][2].split("_").length < 2){
+				// One word name
+				var fullName = useAR[i][2];
+			} else {
+				var firstName = useAR[i][2].split("_")[1];
+				var lastName = useAR[i][2].split("_")[0];
+				var fullName = firstName + "_" + lastName;
+			}
+
+            arr.push([fullName,useAR[i][2]]);
+
+        }
+    }
+    return arr; 
+}
+
+function createQuickWaifuSelect(arr){
+
+	resAr = [];
+
+	arr.sort();
+	
+	for(var i = 0; i < arr.length; i++){
+
+		if(arr[i][0].split("_").length < 2){
+			// One word name
+			var fullName = capitalizeFirstLetter(arr[i][0]);
+		} else {
+			var firstName = capitalizeFirstLetter(arr[i][0].split("_")[0]);
+			var lastName = capitalizeFirstLetter(arr[i][0].split("_")[1]);
+			var fullName = lastName + " " + firstName;
+		}
 
 
+		// Now we create selectbox
+
+		var selectBoxWaifu = document.getElementById("select-waifu");
+   		var option = document.createElement("option");
+        option.text = fullName;
+        option.value = arr[i][1];
+
+        selectBoxWaifu.add(option);
+
+
+	}
+
+}
 
 window.onload = function() {
 	backgroundAudio=document.getElementById("origin-music-player");
@@ -664,8 +606,12 @@ window.onload = function() {
 	checkBGMCookie();
 	checkVolumeCookie();
 
+	// Going to create the quick waifu selectbox
 	rearrangeIDAr = id_log.slice();
-	
+	var nameAR = removeOccIDAr(rearrangeIDAr);
+	createQuickWaifuSelect(nameAR);
+
+	// Deal with audio
 	backgroundAudio.volume= musicVolume;
 	backgroundAudio.play();
 
@@ -673,7 +619,6 @@ window.onload = function() {
     	commandSelect(0);
 	}, 1000, true)
 }
-
 
 
 function updateVolumeMusic(soundValue) {
@@ -863,7 +808,6 @@ function getRandomWaifu()
 
 
 	var scrapePath = "https://imcg-waifu-sim.github.io/imcg-waifu-girl-images/scraped-images/audio/";
-    //var scrapePath = "../distribution/imcg-waifu-girl-images/scraped-images/audio/";
 	var cardPicPath = "https://llsif-waifu-sim.github.io/llsif-waifu-card-pics/scraped-images/"
 
 	
@@ -948,7 +892,6 @@ function getRandomCard()
 	globalIndex = i;
 
 	var scrapePath = "https://imcg-waifu-sim.github.io/imcg-waifu-girl-images/scraped-images/audio/";
-    //var scrapePath = "../distribution/imcg-waifu-girl-images/scraped-images/audio/";
 	var cardPicPath = "https://imcg-waifu-sim.github.io/imcg-waifu-sim/imcg-waifu-girl-images/"
 
 
@@ -1078,17 +1021,13 @@ function searchIndexById(id, idolized)
 	{
 		if(id_log[i][1] == id.toString())
 		{
-			
-			
+
 			// If we are at the end of the array, no need to check if there is anything a step further
 			if(i == id_log.length - 1) 
 			{
 				return i;
 			} 
 
-
-
-			
 			// During normal conditions
 			if(idolized == 'yes'){
 				return i;
@@ -1096,9 +1035,6 @@ function searchIndexById(id, idolized)
 				// If not idolized
 				return i-1;
 			}
-			
-
-
 
 		}
 	}
@@ -1190,7 +1126,6 @@ function searchId()
 	var path;
 
 	var scrapePath = "https://imcg-waifu-sim.github.io/imcg-waifu-girl-images/scraped-images/audio/";
-    //var scrapePath = "../distribution/imcg-waifu-girl-images/scraped-images/audio/";
 	var cardPicPath = "https://llsif-waifu-sim.github.io/llsif-waifu-card-pics/scraped-images/"
 
 
@@ -1252,13 +1187,28 @@ function searchId()
 
 }
 
+function searchIndexByNameDefWaifu(name){
+	var i;
+
+	for(i = 0; i < id_log.length; i++)
+	{
+		if(id_log[i][2] == name.toString() && id_log[i][4] == 'main' && id_log[i][3] == 'no')
+		{
+			return i;
+
+		}
+	}
+	return 'none';
+}
 
 
-function changeWaifu(name, id){
 
-	var path = "images/waifu/" + name +"0.png";
+function changeWaifu(name){
+
+	var path = "https://imcg-waifu-sim.github.io/imcg-waifu-def-girl-images/scraped-images/audio/" + name + "/0.png";
+
 	document.getElementById("idol_img").src=path;
-	var indexFun = searchIndexById(id, 'no');
+	var indexFun = searchIndexByNameDefWaifu(name);
 
 
 	globalIndex = indexFun;
@@ -1269,7 +1219,8 @@ function changeWaifu(name, id){
 	} else {
 		nameAssign(name.split('_')[1]);
 	}
-	document.getElementById("card_id").value = id;
+
+	document.getElementById("card_id").value = id_log[indexFun][1];
 
 	if (globalAudio!=null){
 			globalAudio.pause();
@@ -1325,80 +1276,6 @@ function changeWaifu(name, id){
 			var maxNum = 11;
 			n = Math.floor(Math.random() * maxNum);
 			
-
-			/*
-			var maxNum = 18;
-			n = Math.floor(Math.random() * maxNum);
-			file = "home/";
-		
-			// Activate month speech
-			if(n == maxNum - 1){
-				seasonSpeech();
-				return;
-			}
-
-			if(n == maxNum - 2){
-
-				// Activating event speech
-
-				if(!isAqours(globalWaifu)){
-					var result = eventSpeech();
-
-					if(result == 0){
-						// If today's a certain day
-						return;
-					} else {
-						// Return back to normal then if not a certain day
-
-						maxNum = 15;
-						n = Math.floor(Math.random() * maxNum);
-
-						// Activate month speech
-						if(n == maxNum - 1){
-							
-							seasonSpeech();
-							return;
-						}
-					}
-
-
-
-
-				}
-			}
-
-			// Activate special quote
-			if(n >= maxNum - 4){
-				
-				var errorCheck = -1;
-				var errorCheck = specialQuoteSpeech();
-				if(errorCheck == 0)
-				{
-
-					// If card had a quote, then we are done
-					return;
-				}
-				// If not, recalculate random number generator
-				maxNum = 15;
-				n = Math.floor(Math.random() * maxNum);
-
-				// Activate month speech
-				if(n == maxNum - 1){
-					
-					seasonSpeech();
-					return;
-				}
-				
-				
-				
-			}
-		*/
-
-			
-			
-
-
-
 		} else if (mode == 1){
 			// Waifu button RNG
 			var maxNum = 11;
@@ -1615,6 +1492,9 @@ function changeWaifu(name, id){
 		} else if(clicked_id == 'liveshow_but'){
 			document.getElementById("liveshow_but").src="images/buttons/liveshow-button-hover.png";
 
+
+
+		/*
 		} else if(clicked_id == 'hanayo_but'){
 			document.getElementById("hanayo_but").src="images/chibi-waifu/hanayo-hover.png";
 		} else if(clicked_id == 'rin_but'){
@@ -1654,7 +1534,7 @@ function changeWaifu(name, id){
 		} else if(clicked_id == 'dia_but'){
 			document.getElementById("dia_but").src="images/chibi-waifu/dia-hover.png";
 
-
+		*/
 
 
 		} else if(clicked_id == 'eng_but'){
