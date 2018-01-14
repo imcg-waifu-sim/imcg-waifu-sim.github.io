@@ -1,5 +1,5 @@
 var numOfSongs = numOfSongsMuseAll;
-var subPath = 'muse-together/';
+var subPath = 'cg-together/';
 var songlist_ar = muse_together_ar;
 
 
@@ -156,8 +156,9 @@ function playClick()
 		var mp3Music = document.getElementById("background-music-player");
 
 
-		var songPath = "".concat("https://raw.githubusercontent.com/llsif-waifu-sim/llsif-waifu-songs-ogg/master/songs/",subPath, currSong, ".ogg");
-		var picPath = "".concat("./images/album-covers/",subPath, currSong, ".jpg");
+		var songPath = "".concat("https://raw.githubusercontent.com/imcg-waifu-sim/imcg-waifu-songs-mp3/master/songs-mp3/",subPath, currSong, ".mp3");
+		var picPath = "".concat("./images/album-covers/",subPath, currSong, ".png");
+		
 		
 		currplayingSong = currSong;
 
@@ -235,7 +236,7 @@ function changeSong()
 			currSong = currSong + 1;
 		}
 
-		var picPath = "".concat("./images/album-covers/",subPath, currSong, ".jpg");
+		var picPath = "".concat("./images/album-covers/",subPath, currSong, ".png");
 		$(document).ready(function(){
 			$("#liveshowAlbum").hide();
 			document.getElementById("liveshowAlbum").src =  picPath;
@@ -262,11 +263,11 @@ function changeSong()
 		changeCategoryRandom();
 		
 		if(folder==0){
-			subPath = 'muse-together/';
+			subPath = 'cg-together/';
 		} else if (folder==1){
-			subPath = 'muse-sub-group/';
+			subPath = 'cg-sub-group/';
 		} else if (folder==2){
-			subPath = 'muse-individual/';
+			subPath = 'cg-individual/';
 		} else if (folder==3){
 			subPath = 'aqours-together/';
 		} else if (folder==4){
@@ -282,7 +283,7 @@ function changeSong()
 
 		var randSongInt = calc_random_local_index(chosenNum, folder);
 
-		var picPath = "".concat("./images/album-covers/",subPath, randSongInt, ".jpg");
+		var picPath = "".concat("./images/album-covers/",subPath, randSongInt, ".png");
 		
 		$(document).ready(function(){
 			$("#liveshowAlbum").hide();
@@ -329,7 +330,7 @@ function changeSongBack()
 		}
 		
 
-		var picPath = "".concat("./images/album-covers/",subPath, currSong, ".jpg");
+		var picPath = "".concat("./images/album-covers/",subPath, currSong, ".png");
 
 		$(document).ready(function(){
 			$("#liveshowAlbum").hide();
@@ -384,7 +385,7 @@ function changeSongBack()
 		}
 
 		var randSongInt = calc_random_local_index(chosenNum, folder);
-		var picPath = "".concat("./images/album-covers/",subPath, randSongInt, ".jpg");
+		var picPath = "".concat("./images/album-covers/",subPath, randSongInt, ".png");
 		
 		$(document).ready(function(){
 			$("#liveshowAlbum").hide();
@@ -447,7 +448,7 @@ function changeSongRandom(){
 		return;
 	}
 	var randSongInt = calc_random_local_index(chosenNum, folder);
-	var picPath = "".concat("./images/album-covers/",subPath, randSongInt, ".jpg");
+	var picPath = "".concat("./images/album-covers/",subPath, randSongInt, ".png");
 	
 	$(document).ready(function(){
 		$("#liveshowAlbum").hide();
@@ -537,7 +538,7 @@ function changeCategory()
 	
 	currSong = 0;
 	
-	var songPath = "".concat("https://raw.githubusercontent.com/llsif-waifu-sim/llsif-waifu-songs-ogg/master/songs/",subPath, currSong, ".ogg");
+	var songPath = "".concat("https://raw.githubusercontent.com/imcg-waifu-sim/imcg-waifu-songs-mp3/master/songs-mp3/",subPath, currSong, ".mp3");
 	var picPath = "".concat("./images/album-covers/",subPath, currSong, ".jpg");
 		
 	document.getElementById("song-title-tag").innerHTML =  songlist_ar[currSong][0];

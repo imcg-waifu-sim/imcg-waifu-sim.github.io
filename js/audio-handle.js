@@ -11,6 +11,7 @@ var timerRanOut = false;
 var enableOutsideVal = true;
 
 var charBackground = true;
+var enTransOn = true;
 
 
 function isAqours(waifu)
@@ -604,8 +605,12 @@ window.onload = function() {
 	// Preform cookie checks
 	checkCookie();
 	checkBackgroundCookie();
+	checkCharBackgroundCookie();
 	checkBGMCookie();
+	checkEnTransCookie();
 	checkVolumeCookie();
+
+
 
 	// Going to create the quick waifu selectbox
 	rearrangeIDAr = id_log.slice();
@@ -693,6 +698,8 @@ function charBackgroundToggleOn()
 	var evolved = id_log[globalIndex][3];
 	var subMain = id_log[globalIndex][4];
 
+	
+
 	if(subMain == 'sub'){
 		var backpath = ''
 		if(evolved == 'no'){
@@ -708,6 +715,8 @@ function charBackgroundToggleOn()
 
 		document.getElementById("charBack_but").innerHTML = 'Character Background: ON';
 		document.getElementById("charBack_but").className = 'btn btn-success'
+
+		
 
 	}
 
@@ -742,6 +751,7 @@ function charBackgroundToggleOff()
 	var backpath = 'images/background/background' + background.toString() + '.png';
    	document.getElementById("idol_img").src=path;
 	document.getElementById("homeScreen").src=backpath;
+	
 
 }
 
@@ -754,11 +764,13 @@ function charBackgroundChange()
 		// We are turning on character background
 		
 		charBackgroundToggleOn();
+		storeCharBackground('on');
 
 	} else {
 		// Character background was previously on
 		// We are turning off character background
 		charBackgroundToggleOff();
+		storeCharBackground('off');
 	}
 }
 
@@ -800,11 +812,15 @@ function changeBackgroundBack()
 
 }
 function openTranslate(){
+	enTransOn = true;
 	$("#translation-bubble").fadeIn();
+	storeEnTransOn('on');
 }
 
 function closeTranslate(){
+	enTransOn = false;
 	$("#translation-bubble").hide();
+	storeEnTransOn('off');
 }
 
 
@@ -1765,13 +1781,9 @@ function changeWaifu(name){
 
 	function changeSpeechText (path, n) {
 		var pathString;
-		if(language == 'english'){
-			pathString = "".concat(path, "quote.txt");
-		} else if(language == 'japanese'){
-			pathString = "".concat(path, "quote.txt");
-		} else {
-			alert('Something went wrong');
-		}
+
+		pathString = "".concat(path, "quote.txt");
+
 		//alert(pathString);
 
 		var client;
@@ -1793,7 +1805,44 @@ function changeWaifu(name){
         }
         client.open("GET", pathString, true);
         client.send();
+
+        /*
+		if(enTransOn){
+			changeSpeechTextEn(path, n);
+		}
+		*/
+
     }
+
+    function changeSpeechTextEn (path, n) {
+		var pathStringEn;
+
+		pathStringEn = "".concat(path, "quote_en.txt");
+
+
+		//alert(pathString);
+
+		var client;
+        if (window.XMLHttpRequest) {
+		    // code for modern browsers
+		    client = new XMLHttpRequest();
+		} else {
+		    // code for IE6, IE5
+		    client = new ActiveXObject("Microsoft.XMLHTTP");
+		}
+
+        client.onreadystatechange = function()
+        {
+            if( client.responseText != '' )
+            {
+                var txt = client.responseText.split("\n");
+                document.getElementById("speech-text-en").innerHTML = txt[n];
+            }
+        }
+        client.open("GET", pathStringEn, true);
+        client.send();
+    }
+
 
 	function cameraClick()
 	{

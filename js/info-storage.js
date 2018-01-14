@@ -70,7 +70,7 @@ function checkCookie() {
     } else{
     	document.getElementById("idol_img").src= 'https://imcg-waifu-sim.github.io/imcg-waifu-girl-images/scraped-images/audio/shimamura_uzuki/100001.png';
         document.getElementById("card_id").value = 100001;
-        globalIndex = 0;
+        globalIndex = 9; // Default Uzuki
     }
 }
 
@@ -92,12 +92,12 @@ function checkBGMCookie() {
             document.getElementById("bgmusicselect").value = "2";
             var audio = document.getElementById("origin-music-player");
             audio.src = 'audio/studio-music-1.mp3';
-            backgroundMusic = 1;
+            backgroundMusic = 2;
         } else if (index == '3'){
             document.getElementById("bgmusicselect").value = "3";
             var audio = document.getElementById("origin-music-player");
             audio.src = 'audio/studio-music-2.mp3';
-            backgroundMusic = 1;
+            backgroundMusic = 3;
         } else {
             document.getElementById("bgmusicselect").value = "0";
             var audio = document.getElementById("origin-music-player");
@@ -105,6 +105,40 @@ function checkBGMCookie() {
             backgroundMusic = 0;
         }
     } 
+}
+
+function checkEnTransCookie(){
+    var index = getCookie("en-trans");
+
+    if (index != null && index != "") {
+        if(index == 'on'){
+            $("#translation-bubble").fadeIn();
+        } else {
+            $("#translation-bubble").hide();
+        }
+        
+    } else{
+        // Cookie is null
+        $("#translation-bubble").fadeIn();
+        
+    }
+}
+
+function checkCharBackgroundCookie(){
+    var index = getCookie("charBackground");
+
+    if (index != null && index != "") {
+        if(index == 'on'){
+            charBackgroundToggleOn();
+        } else {
+            charBackgroundToggleOff();
+        }
+        
+    } else{
+        // Cookie is null
+        charBackgroundToggleOn();
+        
+    }
 }
 
 function checkBackgroundCookie() {
@@ -188,6 +222,11 @@ function storeBGMusicCookie(index)
     setCookie("background-music", index, cookieExpireDate);
 }
 
+function storeEnTransOn(index)
+{
+    setCookie("en-trans", index, cookieExpireDate);
+}
+
 function storeSaveWaifuCookie(index, but_id)
 {   
 
@@ -201,6 +240,11 @@ function storeSaveWaifuCookie(index, but_id)
     
 }
 
+
+function storeCharBackground(index)
+{
+    setCookie("charBackground", index, cookieExpireDate);
+}
 
 function storeBackgroundCookie(index)
 {
