@@ -711,7 +711,7 @@ function charBackgroundToggleOn()
 		}
 
 		document.getElementById("homeScreen").src=backpath;
-		document.getElementById("idol_img").src='';
+		document.getElementById("idol_img").src='./images/blank.png';
 
 		document.getElementById("charBack_but").innerHTML = 'Character Background: ON';
 		document.getElementById("charBack_but").className = 'btn btn-success'
@@ -958,7 +958,7 @@ function getRandomWaifu()
 		}
 
     	document.getElementById("homeScreen").src=backpath;
-		document.getElementById("idol_img").src='';
+		document.getElementById("idol_img").src='./images/blank.png';
     } else {
     	// if they are off or there is no character background (default card)
 
@@ -1064,7 +1064,7 @@ function getRandomCard()
 		}
 
     	document.getElementById("homeScreen").src=backpath;
-		document.getElementById("idol_img").src='';
+		document.getElementById("idol_img").src='./images/blank.png';
     } else {
     	// if they are off or there is no character background (default card)
     	
@@ -1340,7 +1340,7 @@ function searchId()
 				}
 
     			document.getElementById("homeScreen").src=backpath;
-				document.getElementById("idol_img").src='';
+				document.getElementById("idol_img").src='./images/blank.png';
 
     		} else {
     			// if they are off or there is no character background (default card)
