@@ -87,6 +87,12 @@
     right: 2%;
 }
 
+#charBack_but{
+    position: absolute;
+    top: 2%;
+    right: 2%;
+}
+
 #home_but{
     position: absolute;
     bottom: -1%;

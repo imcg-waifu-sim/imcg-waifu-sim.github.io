@@ -342,8 +342,37 @@ function savedWaifuLoad(index)
 
 
     //file exists
-    document.getElementById("idol_img").src=path;
-    document.getElementById("cardPicImg").src = cardPicPath;
+    // taking into consideration of charBackground settings
+    if(charBackground && id_log[globalIndex][4] == 'sub'){
+        // If character backgrounds are on
+
+        var id = id_log[globalIndex][1];
+        var name = id_log[globalIndex][2];
+        var evolved = id_log[globalIndex][3];
+
+        var backpath = ''
+        if(evolved == 'no'){
+            id = (parseInt(id)-1).toString();
+            backpath = "https://imcg-waifu-sim.github.io/imcg-waifu-girl-images/scraped-images/audio/" + name + "/"+ id +"_pev.png";
+        } else {
+            id = (parseInt(id)+1).toString();
+            backpath = "https://imcg-waifu-sim.github.io/imcg-waifu-girl-images/scraped-images/audio/" + name + "/"+ id +"_p.png";
+        }
+
+        document.getElementById("homeScreen").src=backpath;
+        document.getElementById("idol_img").src='';
+    } else {
+        // if they are off or there is no character background (default card)
+        
+        var backpath = 'images/background/background' + background.toString() + '.png';
+        document.getElementById("idol_img").src=path;
+        document.getElementById("cardPicImg").src = cardPicPath;
+        document.getElementById("homeScreen").src=backpath;
+
+    }
+
+
+
 
     if(name.split('_').length < 2)
     {

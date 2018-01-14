@@ -141,15 +141,17 @@
 	
 	<center>
 	<div id="container">
-    	<img id='homeScreen' src='' width="220" height="277">
+    	<img id='homeScreen' src='' width="220" height="277" onclick='backgroundClicked();'>
     	<img id="idol_img" src='' usemap="#waifumap">
     	<img id="home_but" src='images/buttons/home-button.png' onmouseover='hoverInBut(this.id)' onmouseout='hoverOutBut(this.id)'  onclick='homeClick()'>
     	
     	<img id="story_but" data-toggle="modal" data-target="#storyModal" src='images/buttons/story-button.png' onmouseover='hoverInBut(this.id)' onmouseout='hoverOutBut(this.id)' onclick="storyVideoShow()">
     	
-
+    	<!--
     	<button id="cardPic_but" type="button" class="btn btn-primary" data-toggle="modal" data-target="#cardPicModal">View Card</button>
-    	
+    	-->
+    	<button id="charBack_but" type="button" class="btn btn-success" onclick='charBackgroundChange()'>Character Background: ON</button>
+
 
     	<img id="member_but" src='images/buttons/member-button.png' onmouseover='hoverInBut(this.id)' onmouseout='hoverOutBut(this.id)' data-toggle="modal" data-target="#memberModal" onclick="memberClick()">
     	<img id="settings_but" src='images/buttons/settings-button.png' onmouseover='hoverInBut(this.id)' onmouseout='hoverOutBut(this.id)' data-toggle="modal" data-target="#settingsModal">
@@ -191,7 +193,7 @@
 
 	<select class="select-waifu" name="select-waifu" id="select-waifu" style='width:60%;overflow:scroll;' onchange="changeWaifu(this.value)"></select>
 
-	
+
 
 	</br>
 	</br>

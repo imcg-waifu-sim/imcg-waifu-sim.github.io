@@ -10,6 +10,7 @@ var away = false;
 var timerRanOut = false;
 var enableOutsideVal = true;
 
+var charBackground = true;
 
 
 function isAqours(waifu)
@@ -677,6 +678,82 @@ function changeBGMusic()
 	audio.play();
 }
 
+function backgroundClicked()
+{
+	if(charBackground && id_log[globalIndex][4] == 'sub'){
+		commandSelect(0);
+	}
+}
+
+function charBackgroundChange()
+{
+
+	var id = id_log[globalIndex][1];
+	var name = id_log[globalIndex][2];
+	var evolved = id_log[globalIndex][3];
+	var subMain = id_log[globalIndex][4];
+
+
+	if(!charBackground){
+		// Character background was previously off
+		// We are turning on character background
+		charBackground = true;
+
+	
+		if(subMain == 'sub'){
+			var backpath = ''
+			if(evolved == 'no'){
+				id = (parseInt(id)-1).toString();
+				backpath = "https://imcg-waifu-sim.github.io/imcg-waifu-girl-images/scraped-images/audio/" + name + "/"+ id +"_pev.png";
+			} else {
+				id = (parseInt(id)+1).toString();
+				backpath = "https://imcg-waifu-sim.github.io/imcg-waifu-girl-images/scraped-images/audio/" + name + "/"+ id +"_p.png";
+			}
+
+			document.getElementById("homeScreen").src=backpath;
+			document.getElementById("idol_img").src='';
+
+		}
+		
+
+
+		
+		document.getElementById("charBack_but").innerHTML = 'Character Background: ON';
+		document.getElementById("charBack_but").className = 'btn btn-success'
+
+
+	} else {
+		// Character background was previously on
+		// We are turning off character background
+		charBackground = false;
+
+
+		var idNormal = convertToNormalForm(id, evolved);
+
+		var scrapePath = "https://imcg-waifu-sim.github.io/imcg-waifu-girl-images/scraped-images/audio/";
+	
+
+		var path = '';
+		if(evolved == 'yes')
+		{
+			path = scrapePath + name + "/" + idNormal + "_ev.png";
+		}else{
+			path = scrapePath + name +  "/" + idNormal + ".png";
+		}
+
+		document.getElementById("charBack_but").innerHTML = 'Character Background: OFF';
+		document.getElementById("charBack_but").className = 'btn btn-primary'
+		
+
+		var backpath = 'images/background/background' + background.toString() + '.png';
+    	document.getElementById("idol_img").src=path;
+		document.getElementById("homeScreen").src=backpath;
+
+	}
+	
+
+}
+
 
 function changeBackground()
 {	
@@ -812,8 +889,7 @@ function getRandomWaifu()
 
 	
 
-	
-	// If talking about Muse & Aqours
+
 	if(idolized == 'yes')
 	{
 		path = scrapePath + name + "/" + id + "_ev.png";
@@ -830,9 +906,36 @@ function getRandomWaifu()
 
 
 
-    //file exists
-	document.getElementById("idol_img").src=path;
-	document.getElementById("cardPicImg").src = cardPicPath;
+	// taking into consideration of charBackground settings
+    if(charBackground && id_log[globalIndex][4] == 'sub'){
+    	// If character backgrounds are on
+
+    	var id = id_log[globalIndex][1];
+		var name = id_log[globalIndex][2];
+		var evolved = id_log[globalIndex][3];
+
+		var backpath = ''
+		if(evolved == 'no'){
+			id = (parseInt(id)-1).toString();
+			backpath = "https://imcg-waifu-sim.github.io/imcg-waifu-girl-images/scraped-images/audio/" + name + "/"+ id +"_pev.png";
+		} else {
+			id = (parseInt(id)+1).toString();
+			backpath = "https://imcg-waifu-sim.github.io/imcg-waifu-girl-images/scraped-images/audio/" + name + "/"+ id +"_p.png";
+		}
+
+    	document.getElementById("homeScreen").src=backpath;
+		document.getElementById("idol_img").src='';
+    } else {
+    	// if they are off or there is no character background (default card)
+
+    	var backpath = 'images/background/background' + background.toString() + '.png';
+    	document.getElementById("idol_img").src=path;
+		document.getElementById("cardPicImg").src = cardPicPath;
+		document.getElementById("homeScreen").src=backpath;
+
+    }
+
+	
 
 	if(name.split('_').length < 2)
 	{
@@ -909,12 +1012,36 @@ function getRandomCard()
 		document.querySelector("input[value='no']").checked = true;
 	}
 
-	//alert(path);
+	// taking into consideration of charBackground settings
+    if(charBackground && id_log[globalIndex][4] == 'sub'){
+    	// If character backgrounds are on
 
-    //file exists
-	document.getElementById("idol_img").src=path;
+    	var id = id_log[globalIndex][1];
+		var name = id_log[globalIndex][2];
+		var evolved = id_log[globalIndex][3];
 
-	document.getElementById("cardPicImg").src = cardPicPath;
+		var backpath = ''
+		if(evolved == 'no'){
+			id = (parseInt(id)-1).toString();
+			backpath = "https://imcg-waifu-sim.github.io/imcg-waifu-girl-images/scraped-images/audio/" + name + "/"+ id +"_pev.png";
+		} else {
+			id = (parseInt(id)+1).toString();
+			backpath = "https://imcg-waifu-sim.github.io/imcg-waifu-girl-images/scraped-images/audio/" + name + "/"+ id +"_p.png";
+		}
+
+    	document.getElementById("homeScreen").src=backpath;
+		document.getElementById("idol_img").src='';
+    } else {
+    	// if they are off or there is no character background (default card)
+    	
+    	var backpath = 'images/background/background' + background.toString() + '.png';
+    	document.getElementById("idol_img").src=path;
+		document.getElementById("cardPicImg").src = cardPicPath;
+		document.getElementById("homeScreen").src=backpath;
+
+    }
+
+
 
 	if(name.split('_').length < 2)
 	{
@@ -1116,7 +1243,7 @@ function searchId()
 
 	var idNormal = convertToNormalForm(id, idolized);
 	var name = searchNameById(id);
-	//alert(id);
+
 
 
 	
@@ -1155,10 +1282,44 @@ function searchId()
 	    },
 	    success: function()
 	    {
-	        //file exists
-	        document.getElementById("idol_img").src=path;
 
-	        document.getElementById("cardPicImg").src = cardPicPath;
+	    	var id = document.getElementById("card_id").value;
+    		var name = searchNameById(id);
+	        
+	        globalIndex = searchIndexById(idNormal, idolized);
+
+	        // taking into consideration of charBackground settings
+    		if(charBackground && id_log[globalIndex][4] == 'sub'){
+    			// If character backgrounds are on
+
+    			var id = id_log[globalIndex][1];
+				var name = id_log[globalIndex][2];
+				var evolved = id_log[globalIndex][3];
+
+				var backpath = ''
+				if(evolved == 'no'){
+					id = (parseInt(id)-1).toString();
+					backpath = "https://imcg-waifu-sim.github.io/imcg-waifu-girl-images/scraped-images/audio/" + name + "/"+ id +"_pev.png";
+				} else {
+					id = (parseInt(id)+1).toString();
+					backpath = "https://imcg-waifu-sim.github.io/imcg-waifu-girl-images/scraped-images/audio/" + name + "/"+ id +"_p.png";
+				}
+
+    			document.getElementById("homeScreen").src=backpath;
+				document.getElementById("idol_img").src='';
+
+    		} else {
+    			// if they are off or there is no character background (default card)
+    			var backpath = 'images/background/background' + background.toString() + '.png';
+    			document.getElementById("idol_img").src=path;
+				document.getElementById("cardPicImg").src = cardPicPath;
+				document.getElementById("homeScreen").src=backpath;
+
+    		}
+
+    		var id = document.getElementById("card_id").value;
+    		var name = searchNameById(id);
+
 
 			if(name.split('_').length < 2)
 			{
@@ -1168,7 +1329,6 @@ function searchId()
 			}
 
 		
-			globalIndex = searchIndexById(idNormal, idolized);
 
 			if (globalAudio!=null){
 				globalAudio.pause();
@@ -1208,6 +1368,11 @@ function changeWaifu(name){
 	var path = "https://imcg-waifu-sim.github.io/imcg-waifu-def-girl-images/scraped-images/audio/" + name + "/0.png";
 
 	document.getElementById("idol_img").src=path;
+
+	var backpath = 'images/background/background' + background.toString() + '.png';
+	document.getElementById("homeScreen").src=backpath;
+
+
 	var indexFun = searchIndexByNameDefWaifu(name);
 
 
@@ -1491,52 +1656,6 @@ function changeWaifu(name){
 			document.getElementById("camera_but").src="images/buttons/camera-button-hover.png";
 		} else if(clicked_id == 'liveshow_but'){
 			document.getElementById("liveshow_but").src="images/buttons/liveshow-button-hover.png";
-
-
-
-		/*
-		} else if(clicked_id == 'hanayo_but'){
-			document.getElementById("hanayo_but").src="images/chibi-waifu/hanayo-hover.png";
-		} else if(clicked_id == 'rin_but'){
-			document.getElementById("rin_but").src="images/chibi-waifu/rin-hover.png";
-		} else if(clicked_id == 'maki_but'){
-			document.getElementById("maki_but").src="images/chibi-waifu/maki-hover.png";
-		} else if(clicked_id == 'honoka_but'){
-			document.getElementById("honoka_but").src="images/chibi-waifu/honoka-hover.png";
-		} else if(clicked_id == 'umi_but'){
-			document.getElementById("umi_but").src="images/chibi-waifu/umi-hover.png";
-		} else if(clicked_id == 'kotori_but'){
-			document.getElementById("kotori_but").src="images/chibi-waifu/kotori-hover.png";
-		} else if(clicked_id == 'nozomi_but'){
-			document.getElementById("nozomi_but").src="images/chibi-waifu/nozomi-hover.png";
-		} else if(clicked_id == 'eli_but'){
-			document.getElementById("eli_but").src="images/chibi-waifu/eli-hover.png";
-		} else if(clicked_id == 'nico_but'){
-			document.getElementById("nico_but").src="images/chibi-waifu/nico-hover.png";
-
-
-		} else if(clicked_id == 'ruby_but'){
-			document.getElementById("ruby_but").src="images/chibi-waifu/ruby-hover.png";
-		} else if(clicked_id == 'hanamaru_but'){
-			document.getElementById("hanamaru_but").src="images/chibi-waifu/hanamaru-hover.png";
-		} else if(clicked_id == 'yoshiko_but'){
-			document.getElementById("yoshiko_but").src="images/chibi-waifu/yoshiko-hover.png";
-		} else if(clicked_id == 'chika_but'){
-			document.getElementById("chika_but").src="images/chibi-waifu/chika-hover.png";
-		} else if(clicked_id == 'you_but'){
-			document.getElementById("you_but").src="images/chibi-waifu/you-hover.png";
-		} else if(clicked_id == 'riko_but'){
-			document.getElementById("riko_but").src="images/chibi-waifu/riko-hover.png";	
-		} else if(clicked_id == 'kanan_but'){
-			document.getElementById("kanan_but").src="images/chibi-waifu/kanan-hover.png";
-		} else if(clicked_id == 'mari_but'){
-			document.getElementById("mari_but").src="images/chibi-waifu/mari-hover.png";
-		} else if(clicked_id == 'dia_but'){
-			document.getElementById("dia_but").src="images/chibi-waifu/dia-hover.png";
-
-		*/
-
-
 		} else if(clicked_id == 'eng_but'){
 			document.getElementById("eng_but").src="images/buttons/english-icon-hover.png";
 		} else if(clicked_id == 'jap_but'){
