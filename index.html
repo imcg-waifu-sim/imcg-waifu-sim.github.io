@@ -142,7 +142,7 @@
 	<center>
 	<div id="container">
     	<img id='homeScreen' src='' width="220" height="277" onclick='backgroundClicked();'>
-    	<img id="idol_img" src='' usemap="#waifumap">
+    	<img id="idol_img" src='' usemap="#waifumap" onError="this.onerror=null;this.src='./images/black.png';">
     	<img id="home_but" src='images/buttons/home-button.png' onmouseover='hoverInBut(this.id)' onmouseout='hoverOutBut(this.id)'  onclick='homeClick()'>
     	
     	<img id="story_but" data-toggle="modal" data-target="#storyModal" src='images/buttons/story-button.png' onmouseover='hoverInBut(this.id)' onmouseout='hoverOutBut(this.id)' onclick="storyVideoShow()">
