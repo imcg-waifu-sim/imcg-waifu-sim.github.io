@@ -684,74 +684,82 @@ function backgroundClicked()
 		commandSelect(0);
 	}
 }
-
-function charBackgroundChange()
-{
+function charBackgroundToggleOn()
+{	
+	charBackground = true;
 
 	var id = id_log[globalIndex][1];
 	var name = id_log[globalIndex][2];
 	var evolved = id_log[globalIndex][3];
 	var subMain = id_log[globalIndex][4];
 
+	if(subMain == 'sub'){
+		var backpath = ''
+		if(evolved == 'no'){
+			id = (parseInt(id)-1).toString();
+			backpath = "https://imcg-waifu-sim.github.io/imcg-waifu-girl-images/scraped-images/audio/" + name + "/"+ id +"_pev.png";
+		} else {
+			id = (parseInt(id)+1).toString();
+			backpath = "https://imcg-waifu-sim.github.io/imcg-waifu-girl-images/scraped-images/audio/" + name + "/"+ id +"_p.png";
+		}
+
+		document.getElementById("homeScreen").src=backpath;
+		document.getElementById("idol_img").src='';
+
+		document.getElementById("charBack_but").innerHTML = 'Character Background: ON';
+		document.getElementById("charBack_but").className = 'btn btn-success'
+
+	}
+
+}
+
+function charBackgroundToggleOff()
+{
+	charBackground = false;
+
+	var id = id_log[globalIndex][1];
+	var name = id_log[globalIndex][2];
+	var evolved = id_log[globalIndex][3];
+	var subMain = id_log[globalIndex][4];
+
+	var idNormal = convertToNormalForm(id, evolved);
+
+	var scrapePath = "https://imcg-waifu-sim.github.io/imcg-waifu-girl-images/scraped-images/audio/";
+	
+
+	var path = '';
+	if(evolved == 'yes')
+	{
+		path = scrapePath + name + "/" + idNormal + "_ev.png";
+	}else{
+		path = scrapePath + name +  "/" + idNormal + ".png";
+	}
+
+	document.getElementById("charBack_but").innerHTML = 'Character Background: OFF';
+	document.getElementById("charBack_but").className = 'btn btn-primary'
+		
+
+	var backpath = 'images/background/background' + background.toString() + '.png';
+   	document.getElementById("idol_img").src=path;
+	document.getElementById("homeScreen").src=backpath;
+
+}
+
+
+function charBackgroundChange()
+{
 
 	if(!charBackground){
 		// Character background was previously off
 		// We are turning on character background
-		charBackground = true;
-
-	
-		if(subMain == 'sub'){
-			var backpath = ''
-			if(evolved == 'no'){
-				id = (parseInt(id)-1).toString();
-				backpath = "https://imcg-waifu-sim.github.io/imcg-waifu-girl-images/scraped-images/audio/" + name + "/"+ id +"_pev.png";
-			} else {
-				id = (parseInt(id)+1).toString();
-				backpath = "https://imcg-waifu-sim.github.io/imcg-waifu-girl-images/scraped-images/audio/" + name + "/"+ id +"_p.png";
-			}
-
-			document.getElementById("homeScreen").src=backpath;
-			document.getElementById("idol_img").src='';
-
-		}
 		
-
-
-		
-		document.getElementById("charBack_but").innerHTML = 'Character Background: ON';
-		document.getElementById("charBack_but").className = 'btn btn-success'
-
+		charBackgroundToggleOn();
 
 	} else {
 		// Character background was previously on
 		// We are turning off character background
-		charBackground = false;
-
-
-		var idNormal = convertToNormalForm(id, evolved);
-
-		var scrapePath = "https://imcg-waifu-sim.github.io/imcg-waifu-girl-images/scraped-images/audio/";
-	
-
-		var path = '';
-		if(evolved == 'yes')
-		{
-			path = scrapePath + name + "/" + idNormal + "_ev.png";
-		}else{
-			path = scrapePath + name +  "/" + idNormal + ".png";
-		}
-
-		document.getElementById("charBack_but").innerHTML = 'Character Background: OFF';
-		document.getElementById("charBack_but").className = 'btn btn-primary'
-		
-
-		var backpath = 'images/background/background' + background.toString() + '.png';
-    	document.getElementById("idol_img").src=path;
-		document.getElementById("homeScreen").src=backpath;
-
+		charBackgroundToggleOff();
 	}
-	
-
 }
 
 
@@ -767,6 +775,7 @@ function changeBackground()
 
 	var backpath = 'images/background/background' + background.toString() + '.png';
 	
+	charBackgroundToggleOff();
 	document.getElementById("homeScreen").src=backpath;
 	
 }
@@ -785,6 +794,7 @@ function changeBackgroundBack()
 
 	var backpath = 'images/background/background' + background.toString() + '.png';
 
+	charBackgroundToggleOff();
 	document.getElementById("homeScreen").src=backpath;
 	
 }
