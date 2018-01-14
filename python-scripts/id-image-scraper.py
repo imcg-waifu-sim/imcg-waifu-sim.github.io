@@ -69,12 +69,13 @@ def PILRetrieveImage(img_url, idNum, dirName, cardId, evolveId, hasAudio, status
 
 	path_to_save_def = '../../distribution/imcg-waifu-def-girl-images/scraped-images/'+ hasAudioPath + '/' +str(dirName) +'/0.png'
 	path_to_save_ev_def = '../../distribution/imcg-waifu-def-girl-images/scraped-images/' + hasAudioPath + '/' + str(dirName) + '/0_ev.png'
-
+	'''
 	response = requests.get(img_url)
 	img = Image.open(BytesIO(response.content))
 	img.save(path_to_save)
 	img.save(path_to_save_def)
 	img.close()
+	'''
 
 	if status_num == 3:
 		# There is an evolution from
@@ -88,16 +89,17 @@ def PILRetrieveImage(img_url, idNum, dirName, cardId, evolveId, hasAudio, status
 		imageURL = data['result'][0]['sprite_image_ref']
 		iconURL = data['result'][0]['icon_image_ref']
 
-		
+		'''	
 		response = requests.get(imageURL)
 		img = Image.open(BytesIO(response.content))
 		img.save(path_to_save_ev)
 		img.save(path_to_save_ev_def)
 		img.close()
+		'''
 
 	# Below, we insert some code to extract quotes and audio clips
 	extractQuotes(dirName, idNum, cardId, evolveId, hasAudio, True)
-	spriteExtract(dirName, idNum, cardId, evolveId, hasAudio)
+	#spriteExtract(dirName, idNum, cardId, evolveId, hasAudio)
 	posterExtract(dirName, idNum, cardId, evolveId, hasAudio)
 
 
@@ -149,12 +151,12 @@ for x in range(begin, last+1):
 		# We are mainly working with this
 		# There is evolution form
 
-		
+		'''	
 		# If we only want to print the array
 		if hasAudio:
 			printDefAr(x_str, dirName.lower(), baseCardId, evolveId, 3)
-
 		'''
+		
 		PILRetrieveImage(imageURL, x_str, dirName.lower(), baseCardId, evolveId, hasAudio, 3)
 
 		if hasAudio:
@@ -162,4 +164,4 @@ for x in range(begin, last+1):
 			print("['" + x_str + "','"+ str(evolveId)+"','" + dirName.lower() +"','no','main'],")
 			print("['" + x_str + "','"+ str(baseCardId)+"','" + dirName.lower() +"','yes','main'],")
 
-		'''
+		

@@ -166,6 +166,27 @@
 		 	 404: Comment not found
 		 	 </div></font>
 		</div>
+
+	
+
+		<div id="translation-bubble" class="bubbleEN">
+			<font style='font-family: "Arial";letter-spacing: 0.2px;font-weight: 5;  text-align: left;'>
+			<div>Text from Google Translate:</div>
+			</font>
+
+    		<font style='font-family: "Arial";letter-spacing: 0.2px;font-weight: 5; font-size: 125%; text-align: left;'>
+    		<div id='speech-text-en' style='opacity: 2.0;'>
+    
+		 	 404: Translation not found
+		 	 </div></font>
+		 	 <br><br>
+		 	 <span class="closeText" onclick='closeTranslate()'>
+		 	 	<font>
+		 	 		Close This
+		 	 	</font>
+		 	 </span>
+		</div>
+
 	</div>
 
 	<map name="waifumap">
@@ -277,6 +298,13 @@
 						  <option value="3" selected>Studio Background Music (Night)</option>
 						</select>
 					</div>
+					</p>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<p>
+						<button id="turnOnTranslate_but" type="button" class="btn btn-warning" onclick='openTranslate()'>Show English Translations (by Google Translate)</button>
 					</p>
 				</td>
 			</tr>

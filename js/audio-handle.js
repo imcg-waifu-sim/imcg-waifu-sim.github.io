@@ -797,6 +797,14 @@ function changeBackgroundBack()
 	charBackgroundToggleOff();
 	document.getElementById("homeScreen").src=backpath;
 	
+
+}
+function openTranslate(){
+	$("#translation-bubble").fadeIn();
+}
+
+function closeTranslate(){
+	$("#translation-bubble").hide();
 }
 
 

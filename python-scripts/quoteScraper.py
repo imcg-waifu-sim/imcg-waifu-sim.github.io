@@ -9,6 +9,8 @@ from bs4 import BeautifulSoup
 import os
 import re
 
+from quoteTranslate import *
+
 def audioExists(cardID):
 	# Check to see if the card has sound or not
 	cardID = str(cardID)
@@ -74,6 +76,7 @@ def dirExistCheck(fullName, charID, cardID, cardIDEv, hasAudio):
 
 def extractQuotes(fullName, charID, cardID, cardIDEv, hasAudio, fromPoster):
 
+
 	cardID = str(cardID)
 	charID = str(charID)
 	cardIDEv = str(cardIDEv)
@@ -107,6 +110,8 @@ def extractQuotes(fullName, charID, cardID, cardIDEv, hasAudio, fromPoster):
 		savePath = '../../distribution/imcg-waifu-sim-quotes/'+hasAudioPath+'/'+fullName+'/'+charID+'/'+cardID+'/home/quote.txt'
 		savePathEv = '../../distribution/imcg-waifu-sim-quotes/'+hasAudioPath+'/'+fullName+'/'+charID+'/'+cardIDEv+'/home/quote.txt'
 
+		savePathEn = '../../distribution/imcg-waifu-sim-quotes/'+hasAudioPath+'/'+fullName+'/'+charID+'/'+cardID+'/home/quote_en.txt'
+		savePathEvEn = '../../distribution/imcg-waifu-sim-quotes/'+hasAudioPath+'/'+fullName+'/'+charID+'/'+cardIDEv+'/home/quote_en.txt'
 
 		downloadPath = '../../distribution/imcg-waifu-sim-quotes/'+hasAudioPath+'/'+fullName+'/'+charID+'/'+cardID+'/home/audio/'
 		downloadPathEv = '../../distribution/imcg-waifu-sim-quotes/'+hasAudioPath+'/'+fullName+'/'+charID+'/'+cardIDEv+'/home/audio/'
@@ -115,17 +120,21 @@ def extractQuotes(fullName, charID, cardID, cardIDEv, hasAudio, fromPoster):
 		savePath = '../../distribution/imcg-waifu-sim-quotes/'+hasAudioPath+'/'+fullName+'/'+charID+'/'+cardIDEv+'/home/quote.txt'
 		savePathEv = '../../distribution/imcg-waifu-sim-quotes/'+hasAudioPath+'/'+fullName+'/'+charID+'/'+cardID+'/home/quote.txt'
 
+		savePathEn = '../../distribution/imcg-waifu-sim-quotes/'+hasAudioPath+'/'+fullName+'/'+charID+'/'+cardIDEv+'/home/quote_en.txt'
+		savePathEvEn = '../../distribution/imcg-waifu-sim-quotes/'+hasAudioPath+'/'+fullName+'/'+charID+'/'+cardID+'/home/quote_en.txt'
 
 		downloadPath = '../../distribution/imcg-waifu-sim-quotes/'+hasAudioPath+'/'+fullName+'/'+charID+'/'+cardIDEv+'/home/audio/'
 		downloadPathEv = '../../distribution/imcg-waifu-sim-quotes/'+hasAudioPath+'/'+fullName+'/'+charID+'/'+cardID+'/home/audio/'
 
 
 	quoteFile = open(savePath, 'w')
+	quoteFileEn = open(savePathEn, 'w')
 
 	splitCounter = 0
 	stageNum = 0
 	enteredFirst = False
 	occ_count = -1
+
 
 	if table is None:
 		print(cardID)
@@ -144,9 +153,11 @@ def extractQuotes(fullName, charID, cardID, cardIDEv, hasAudio, fromPoster):
 
 			# Switch to new file
 			quoteFile.close()
+			quoteFileEn.close()
 
 			if stageNum < 2:
 				quoteFile = open(savePathEv, 'w')
+				quoteFileEn = open(savePathEvEn, 'w')
 
 				#print('Entering Stage: ' + str(stageNum))
 
@@ -186,6 +197,9 @@ def extractQuotes(fullName, charID, cardID, cardIDEv, hasAudio, fromPoster):
 
 					quoteStr = span.text.encode('utf8') + '\n'
 					quoteFile.write(quoteStr)
+					transRes = translateText(quoteStr).encode('utf8') + '\n'
+					quoteFileEn.write(transRes)
+
 					splitCounter = 0
 					occ_count = occ_count + 1
 					#print('')
@@ -203,7 +217,7 @@ def extractQuotes(fullName, charID, cardID, cardIDEv, hasAudio, fromPoster):
 						dlPath = downloadPath + str(occ_count) + '.mp3'
 					else:
 						dlPath = downloadPathEv + str(occ_count)+ '.mp3'
-					urllib.urlretrieve(a['href'],dlPath)		
+					#urllib.urlretrieve(a['href'],dlPath)		
 
 					correctSound = False
 
@@ -340,11 +354,11 @@ def posterExtract(dirName, charID, cardID, cardIDEv, hasAudio):
 
 			if response.status_code == 404:
 				continue
-
+			'''
 			img = Image.open(BytesIO(response.content))
 			img.save(path_to_save_ev)
 			img.close()
-
+			'''
 
 			if hasAudio:
 
@@ -365,11 +379,11 @@ def posterExtract(dirName, charID, cardID, cardIDEv, hasAudio):
 
 			if response.status_code == 404:
 				continue
-
+			'''
 			img = Image.open(BytesIO(response.content))
 			img.save(path_to_save)
 			img.close()
-
+			'''
 
 			if hasAudio:
 				print("['" + charID + "','"+ cardID+"','" + dirName.lower() +"','no','sub'],")
