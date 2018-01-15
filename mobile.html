@@ -128,15 +128,17 @@
 	<table style='width:100%'>
 		<tr>
 			<td style='width:49%'>
-				<button style='width:100%; background:#2ECCFA;border-color:#2ECCFA;' type="button" class="ui-btn ui-icon-carat-l ui-btn-icon-left" onclick="changeBackgroundBack()"><font color='white' >Wallpaper</font></button>
+				<button style='width:100%;' type="button" class="ui-btn ui-icon-carat-l ui-btn-icon-left" onclick="changeBackgroundBack()">Wallpaper</button>
 			</td>
 			<td style='width:49%'>
-				<button style='width:100%; background:#2ECCFA;border-color:#2ECCFA;' type="button" class="ui-btn ui-icon-carat-r ui-btn-icon-right" onclick="changeBackground()"><font color='white' >Wallpaper</font></button>
+				<button style='width:100%;' type="button" class="ui-btn ui-icon-carat-r ui-btn-icon-right" onclick="changeBackground()">Wallpaper</button>
 			</td>
 		</tr>
 	</table>
 
-	<button id="charBack_but"  style='width:100%; background:#2ECCFA;border-color:#2ECCFA;' type="button" class="btn btn-success" onclick='charBackgroundChange()'>Character Background: ON</button>
+	
+	<button id="charBack_but"  style='width:100%; background:#64FE2E;border-color:#64FE2E;' class="ui-btn" type="button" onclick='charBackgroundChange()'><font color='white'>Character Background: ON</font></button>
+
 
 	<select class="select-waifu" name="select-waifu" id="select-waifu" style='width:100%;overflow:scroll;' onchange="changeWaifu(this.value)"></select>
 
@@ -197,8 +199,10 @@
 	    </p>
 	    <p>
 	    	<select class="select-bgmusic" name="select-bgmusic" id="select-bgmusic" style='width:100%' onchange="changeBGMusic()">
-				<option value="0">Muse Background Music</option>
-				<option value="1" selected>Aqours Background Music</option>
+				<option value="0">Home Screen Background Music</option>
+				<option value="1" selected>Studio Background Music (Day)</option>
+				<option value="2" selected>Studio Background Music (Evening)</option>
+				<option value="3" selected>Studio Background Music (Night)</option>
 			</select>
 	    </p>
 		<p>

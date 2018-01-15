@@ -79,27 +79,27 @@ function checkBGMCookie() {
     if (index != null && index != "") {
         if(index == '0')
         {
-            document.getElementById("bgmusicselect").value = "0";
+            $('#select-bgmusic').val('0').selectmenu('refresh');
             var audio = document.getElementById("origin-music-player");
             audio.src = 'audio/background-music.mp3';
             backgroundMusic = 0;
         } else if (index == '1'){
-            document.getElementById("bgmusicselect").value = "1";
+            $('#select-bgmusic').val('1').selectmenu('refresh');
             var audio = document.getElementById("origin-music-player");
             audio.src = 'audio/studio-music-0.mp3';
             backgroundMusic = 1;
         } else if (index == '2'){
-            document.getElementById("bgmusicselect").value = "2";
+            $('#select-bgmusic').val('2').selectmenu('refresh');
             var audio = document.getElementById("origin-music-player");
             audio.src = 'audio/studio-music-1.mp3';
             backgroundMusic = 2;
         } else if (index == '3'){
-            document.getElementById("bgmusicselect").value = "3";
+            $('#select-bgmusic').val('3').selectmenu('refresh');
             var audio = document.getElementById("origin-music-player");
             audio.src = 'audio/studio-music-2.mp3';
             backgroundMusic = 3;
         } else {
-            document.getElementById("bgmusicselect").value = "0";
+            $('#select-bgmusic').val('4').selectmenu('refresh');
             var audio = document.getElementById("origin-music-player");
             audio.src = 'audio/background-music.mp3';
             backgroundMusic = 0;

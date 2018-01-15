@@ -6,13 +6,17 @@ var globalWaifu = 'uzuki';
 var maxNumOfCard = id_log[id_log.length-1][0];
 var language = 'english';
 var background_playing = false;
-var maxNumBackground = 126;
 
-
-var away = false;
-var timerRanOut = false;
 var orientationMode = 'portrait'
 
+var maxNumBackground = 314;
+var globalIndex = 0;
+var away = false;
+var timerRanOut = false;
+var enableOutsideVal = true;
+
+var charBackground = true;
+var enTransOn = true;
 
 function getCurrentOrientation()
 {
@@ -37,20 +41,6 @@ $(window).bind("orientationchange", function(e){
    }	
 });
 
-
-
-var globalAudio = null;
-var globalWaifu = 'uzuki';
-//var maxNumOfCard = id_log[id_log.length-1][0];
-var language = 'english';
-var maxNumBackground = 314;
-var globalIndex = 0;
-var away = false;
-var timerRanOut = false;
-var enableOutsideVal = true;
-
-var charBackground = true;
-var enTransOn = true;
 
 
 function isAqours(waifu)
@@ -689,18 +679,38 @@ function pauseBackgroundMusic()
 
 function playBackgroundMusic()
 {
+	var bgmusic = document.getElementById("select-bgmusic").value;
+
 	var audio = document.getElementById("origin-music-player"); // For the main background
 	var mainAudio = document.getElementById("background-music-player"); // For the music player
 	mainAudio.pause();
 	audio.pause();
 	audio.volume = musicVolume;
+	if(bgmusic == 0)
+	{
+		audio.src = 'audio/background-music.mp3';
+		storeBGMusicCookie('0');
+	} else if(bgmusic == 1){
+		audio.src = 'audio/studio-music-0.mp3';
+		storeBGMusicCookie('1');
+	} else if(bgmusic == 2){
+		audio.src = 'audio/studio-music-1.mp3';
+		storeBGMusicCookie('2');
+	} else if(bgmusic == 3){
+		audio.src = 'audio/studio-music-2.mp3';
+		storeBGMusicCookie('3');
+	}  else {
+		audio.src = 'audio/background-music.mp3';
+		storeBGMusicCookie('0');
+	}
 	audio.play();
+	background_playing = true;
 }
 
 
 function changeBGMusic()
 {
-	var bgmusic = document.getElementById("bgmusicselect").value;
+	var bgmusic = document.getElementById("select-bgmusic").value;
 	var audio = document.getElementById("origin-music-player");
 	audio.pause();
 	if(bgmusic == 0)
@@ -755,8 +765,9 @@ function charBackgroundToggleOn()
 
 	}
 
-	document.getElementById("charBack_but").innerHTML = 'Character Background: ON';
-	document.getElementById("charBack_but").className = 'btn btn-success'
+	document.getElementById("charBack_but").innerHTML = '<font color="white">Character Background: ON</font>';
+	document.getElementById("charBack_but").style.background = "#64FE2E";
+
 
 }
 
@@ -782,8 +793,8 @@ function charBackgroundToggleOff()
 		path = scrapePath + name +  "/" + idNormal + ".png";
 	}
 
-	document.getElementById("charBack_but").innerHTML = 'Character Background: OFF';
-	document.getElementById("charBack_but").className = 'btn btn-primary'
+	document.getElementById("charBack_but").innerHTML = '<font color="white">Character Background: OFF</font>';
+	document.getElementById("charBack_but").style.background = "#2ECCFA";
 		
 
 	var backpath = 'images/background/background' + background.toString() + '.png';
