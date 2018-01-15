@@ -99,29 +99,29 @@
   		<script src='mobile-js/touch-event.js'></script>
 
     	<div id="speech-bubble" class="bubble">
-    		<font style='font-family: "Arial";letter-spacing: 0.2px;font-weight: 5; font-size: 125%; color:white; text-align: left;'><div id='speech-text' style='opacity: 2.0;'>
+    		<font style='font-family: "Arial";letter-spacing: 0.2px;font-weight: 5; font-size: 60%; color:white; text-align: left;'><div id='speech-text' style='opacity: 2.0;'>
 		 	 404: Comment not found
 		 	 </div></font>
 		</div>
 
 		<div id="translation-bubble" class="bubbleEN">
-			<font style='font-family: "Arial";letter-spacing: 0.2px;font-weight: 5;  text-align: left;'>
+			<font style='font-family: "Arial";letter-spacing: 0.2px;font-weight: 5; font-size: 45%; text-align: left;'>
 			<div>Powered By Google Translate:</div>
 			</font>
 
-    		<font style='font-family: "Arial";letter-spacing: 0.2px;font-weight: 5; font-size: 110%; text-align: left;'>
+    		<font style='font-family: "Arial";letter-spacing: 0.2px;font-weight: 5; font-size: 65%; text-align: left;'>
     		<div id='speech-text-en' style='opacity: 2.0;'>
     
 		 	 404: Translation not found
 		 	 </div></font>
 		 	 <br>
 		 	 <span class="closeText" onclick='closeTranslate()'>
-		 	 	<font>
+		 	 	<font style="font-size: 55%; ">
 		 	 		Close This
 		 	 	</font>
 		 	 </span>
 		</div>
-		
+
 	</div>
 
 
@@ -140,29 +140,12 @@
 
 
 
- 
+ 	<!--
     <select class="select-waifu" name="select-waifu" id="select-waifu" style='width:100%' onchange="changeWaifu()">
-		<option value="honoka">Kousaka Honoka</option>
-		<option value="kotori">Minami Kotori</option>
-		<option value="umi">Sonoda Umi</option>
-		<option value="hanayo">Koizumi Hanayo</option>
-		<option value="rin">Hoshizora Rin</option>
-		<option value="maki">Nishikino Maki</option>
-		<option value="eli">Ayase Eli</option>
-		<option value="nozomi">Tojo Nozomi</option>
-		<option value="nico">Yazawa Nico</option>
-
-		<option value="hanamaru">Kunikida Hanamaru</option>
-		<option value="ruby">Kurosawa Ruby</option>
-		<option value="yoshiko">Tsushima Yoshiko</option>
-		<option value="chika">Takami Chika</option>
-		<option value="riko">Sakurauchi Riko</option>
-		<option value="you">Watanabe You</option>
-		<option value="dia">Kurosawa Dia</option>
-		<option value="kanan">Matsuura Kanan</option>
-		<option value="mari">Ohara Mari</option>
+		
 	</select>
-
+	-->
+	<select class="select-waifu" name="select-waifu" id="select-waifu" style='width:60%;overflow:scroll;' onchange="changeWaifu(this.value)"></select>
 
 	
 	<table style='width:100%'>
@@ -215,6 +198,9 @@
 				<option value="0">English</option>
 				<option value="1">Japanese</option>
 			</select>
+	    </p>
+	    <p>
+	    	<button id="turnOnTranslate_but" type="button"  onclick='openTranslate()'>Show English Translations (by Google Translate)</button>
 	    </p>
 	    <p>
 	    	<select class="select-bgmusic" name="select-bgmusic" id="select-bgmusic" style='width:100%' onchange="changeBGMusic()">

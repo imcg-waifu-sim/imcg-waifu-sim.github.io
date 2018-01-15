@@ -112,9 +112,9 @@
     top: 3%;
     left: 2%;
 
-    width:380px;
+    width:30%;
     min-height:1.5em;
-    padding: 16px;
+    padding: 6px;
     background: #FFFFFF;
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
@@ -133,11 +133,9 @@
     bottom: 25%;
     right: 3%;
 
-    width:310px;
-    height:170px;
-
+    width:25%;
     min-height:1.5em;
-    padding: 16px;
+    padding: 6px;
     background: #2E2E2E;
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
@@ -159,7 +157,7 @@
     display: block;
     width: 0;
     z-index: 1;
-    top: 31px;
+    top: 15px;
     left: -29px;
 
     
@@ -180,7 +178,7 @@
     width: 0;
     z-index: 0;
 
-    top: 30px;
+    top: 14px;
     left: -28px;
 
     
