@@ -1282,7 +1282,7 @@ function convertToNormalForm(id, idolized)
 		{
 
 
-			//alert(id_log[i]);
+			
 			if(idolized == 'no' && id_log[i][3] == 'no'){
 				//alert('1');
 				return (parseInt(id_log[i][1])-1).toString();
@@ -1318,7 +1318,7 @@ function searchId()
 {
 
 	var id = document.getElementById("card_id").value;
-	var idolized = $('input[id="radio-idol"]:checked').val();
+	var idolized = $(".select-idol option:selected").val();
 
 	
 	if(!isInt(id)){
