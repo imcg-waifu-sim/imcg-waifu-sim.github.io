@@ -7,8 +7,9 @@
 	<link rel="stylesheet" type="text/css" href="css/mobile-scene.css">
 	<link rel="stylesheet" href="css/font-awesome.min.css">
 	
+	<!--
 	<script src="mobile-js/redirect-mobile.js"></script>
-
+	-->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
 
@@ -59,7 +60,7 @@
 
   <div data-role="page" id="pageone" style="background:#FF69B4;">
     <div data-role="header">
-     <h1>LLSIF Waifu Sim</h1>
+     <h1>Idolmaster Cinderella Girls Waifu Sim</h1>
   </div>
 
    <div data-role="navbar">
@@ -97,14 +98,33 @@
     	
   		<script src='mobile-js/touch-event.js'></script>
 
-    	<div id="speech-bubble" class="bubble" style='display:none; '>
-    		<font id='speech-font' style="font-size:50px;"><div id='speech-text' style='opacity: 2.0;'>
+    	<div id="speech-bubble" class="bubble">
+    		<font style='font-family: "Arial";letter-spacing: 0.2px;font-weight: 5; font-size: 125%; color:white; text-align: left;'><div id='speech-text' style='opacity: 2.0;'>
 		 	 404: Comment not found
 		 	 </div></font>
 		</div>
+
+		<div id="translation-bubble" class="bubbleEN">
+			<font style='font-family: "Arial";letter-spacing: 0.2px;font-weight: 5;  text-align: left;'>
+			<div>Powered By Google Translate:</div>
+			</font>
+
+    		<font style='font-family: "Arial";letter-spacing: 0.2px;font-weight: 5; font-size: 110%; text-align: left;'>
+    		<div id='speech-text-en' style='opacity: 2.0;'>
+    
+		 	 404: Translation not found
+		 	 </div></font>
+		 	 <br>
+		 	 <span class="closeText" onclick='closeTranslate()'>
+		 	 	<font>
+		 	 		Close This
+		 	 	</font>
+		 	 </span>
+		</div>
+		
 	</div>
 
-	
+
 	<table style='width:100%'>
 		<tr>
 			<td style='width:49%'>
@@ -116,7 +136,7 @@
 		</tr>
 	</table>
 
-
+	<button id="charBack_but"  style='width:100%; background:#2ECCFA;border-color:#2ECCFA;' type="button" class="btn btn-success" onclick='charBackgroundChange()'>Character Background: ON</button>
 
 
 

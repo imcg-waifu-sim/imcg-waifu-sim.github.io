@@ -1,13 +1,11 @@
-var voiceVolume = 0.3;
-var musicVolume = 0.3;
+var voiceVolume = 0.4;
+var musicVolume = 0.2;
 var background = 0;
 var globalIndex = 0;
-
-var liveshowBackground = true;
-var waifuVoiceEnable = true;
+var backgroundMusic = 1;
 var cookieExpireDate = 100*365;
 
-var othersArray = ['shiitake','alpaca']
+var othersArray = ['shiitake','alpaca'];
 
 function isOthers(waifu)
 {
@@ -21,6 +19,7 @@ function isOthers(waifu)
 
 }
 
+
 // Setting and getting the cookies
 
 function setCookie(cname, cvalue, exdays) {
@@ -28,8 +27,8 @@ function setCookie(cname, cvalue, exdays) {
     d.setTime(d.getTime() + (exdays*24*60*60*1000));
     var expires = "expires="+ d.toUTCString();
     document.cookie = cname + "=" + cvalue + "; " + expires;
+    
 }
-
 
 function getCookie(cname) {
     var name = cname + "=";
@@ -46,50 +45,108 @@ function getCookie(cname) {
     return "";
 }
 
+function deleteCookie(name) {
+    // This function will attempt to remove a cookie from all paths.
+    var pathBits = location.pathname.split('/');
+    var pathCurrent = ' path=';
 
+    // do a simple pathless delete first.
+    document.cookie = name + '=; expires=Thu, 01-Jan-1970 00:00:01 GMT;';
 
-
+    for (var i = 0; i < pathBits.length; i++) {
+        pathCurrent += ((pathCurrent.substr(-1) != '/') ? '/' : '') + pathBits[i];
+        document.cookie = name + '=; expires=Thu, 01-Jan-1970 00:00:01 GMT;' + pathCurrent + ';';
+    }
+}
 
 // Check cookies
 
 function checkCookie() {
     var index=getCookie("waifu-index");
-
+    
     globalIndex = index;
     if (index != null && index != "" && !isNaN(index)) {
         mainWaifuSet(index);
     } else{
-        globalIndex = 0;
-    	document.getElementById("idol_img").src= 'images/waifu/honoka0.png';
-        document.getElementById("card_id").value = 28;
+        document.getElementById("idol_img").src= 'https://imcg-waifu-sim.github.io/imcg-waifu-girl-images/scraped-images/audio/shimamura_uzuki/100001.png';
+        document.getElementById("card_id").value = 100001;
+        globalIndex = 9; // Default Uzuki
     }
 }
 
 function checkBGMCookie() {
     var index=getCookie("background-music");
     if (index != null && index != "") {
-        if(index == 'MU')
+        if(index == '0')
         {
-            $('#select-bgmusic').val('0').selectmenu('refresh');
+            document.getElementById("bgmusicselect").value = "0";
             var audio = document.getElementById("origin-music-player");
             audio.src = 'audio/background-music.mp3';
-
-        }else {
-            document.getElementById("select-bgmusic").value = "1";
+            backgroundMusic = 0;
+        } else if (index == '1'){
+            document.getElementById("bgmusicselect").value = "1";
             var audio = document.getElementById("origin-music-player");
-            audio.src = 'audio/background-music1.mp3';
-           
+            audio.src = 'audio/studio-music-0.mp3';
+            backgroundMusic = 1;
+        } else if (index == '2'){
+            document.getElementById("bgmusicselect").value = "2";
+            var audio = document.getElementById("origin-music-player");
+            audio.src = 'audio/studio-music-1.mp3';
+            backgroundMusic = 2;
+        } else if (index == '3'){
+            document.getElementById("bgmusicselect").value = "3";
+            var audio = document.getElementById("origin-music-player");
+            audio.src = 'audio/studio-music-2.mp3';
+            backgroundMusic = 3;
+        } else {
+            document.getElementById("bgmusicselect").value = "0";
+            var audio = document.getElementById("origin-music-player");
+            audio.src = 'audio/background-music.mp3';
+            backgroundMusic = 0;
         }
     } 
 }
 
+function checkEnTransCookie(){
+    var index = getCookie("en-trans");
+
+    if (index != null && index != "") {
+        if(index == 'on'){
+            $("#translation-bubble").fadeIn();
+        } else {
+            $("#translation-bubble").hide();
+        }
+        
+    } else{
+        // Cookie is null
+        $("#translation-bubble").fadeIn();
+        
+    }
+}
+
+function checkCharBackgroundCookie(){
+    var index = getCookie("charBackground");
+
+    if (index != null && index != "") {
+        if(index == 'on'){
+            charBackgroundToggleOn();
+        } else {
+            charBackgroundToggleOff();
+        }
+        
+    } else{
+        // Cookie is null
+        charBackgroundToggleOn();
+        
+    }
+}
+
 function checkBackgroundCookie() {
     var index=getCookie("background-index");
-    
     if (index != null && index != "") {
         mainBackgroundSet(index);
     } else{
-    	document.getElementById("homeScreen").src= 'images/background/background0.png';
+        document.getElementById("homeScreen").src= 'images/background/background0.png';
     }
 }
 
@@ -111,6 +168,8 @@ function checkWaifuLoadCookie(but_id) {
     var index=getCookie("saved-waifu-index-1");
     var index2=getCookie("saved-waifu-index-2");
     var index3=getCookie("saved-waifu-index-3");
+
+    globalIndex = 0;
 
     if (index != null && index != "" && !isNaN(index)) {
 
@@ -140,39 +199,7 @@ function checkWaifuLoadCookie(but_id) {
         }
             
     } 
-    globalIndex = 0;
-}
-
-function checkWaifuVoiceEnableCookie() {
-    var index=getCookie("waifuVoice-enable");
     
-    if (index != null && index != "") {
-        if(index=='false'){
-            waifuVoiceEnable = false;
-            $("#waifuVoiceSwitch").prop( "checked", false ).flipswitch( "refresh" ) ;
-
-
-        } else {
-            waifuVoiceEnable = true;
-        }
-        
-
-    } 
-}
-
-
-
-function checkLiveshowPlayerEnableCookie() {
-    var index=getCookie("liveshowPlayer-enable");
-    if (index != null && index != "") {
-        if(index=='false'){
-            liveshowBackground = false;
-            $("#LiveshowSwitch").prop( "checked", false ).flipswitch( "refresh" ) ;
-            
-        } else {
-            liveshowBackground = true;
-        }
-    } 
 }
 
 
@@ -186,11 +213,23 @@ function checkLiveshowPlayerEnableCookie() {
 
 function storeCookie(index)
 {
-    setCookie("waifu-index", index, cookieExpireDate);
+
+    setCookie("waifu-index", index, true);
+}
+
+function storeBGMusicCookie(index)
+{
+    setCookie("background-music", index, cookieExpireDate);
+}
+
+function storeEnTransOn(index)
+{
+    setCookie("en-trans", index, cookieExpireDate);
 }
 
 function storeSaveWaifuCookie(index, but_id)
-{
+{   
+
     if(but_id == 'waifu_save_but_1'){
        setCookie("saved-waifu-index-1", index, cookieExpireDate); 
    } else if(but_id == 'waifu_save_but_2'){
@@ -201,20 +240,20 @@ function storeSaveWaifuCookie(index, but_id)
     
 }
 
-function storeBGMusicCookie(index)
-{
-    setCookie("background-music", index, cookieExpireDate);
-}
 
+function storeCharBackground(index)
+{
+    setCookie("charBackground", index, cookieExpireDate);
+}
 
 function storeBackgroundCookie(index)
 {
-	setCookie("background-index", index, cookieExpireDate);
+    setCookie("background-index", index, cookieExpireDate);
 }
 
 function storeVolumeMusicCookie(volume)
 {
-	setCookie("volumeBack-value", volume, cookieExpireDate);
+    setCookie("volumeBack-value", volume, cookieExpireDate);
 }
 
 function storeVolumeVoiceCookie(volume)
@@ -222,24 +261,6 @@ function storeVolumeVoiceCookie(volume)
     setCookie("volumeVoice-value", volume, cookieExpireDate);
 }
 
-function enableVoiceCookie(bool)
-{
-    if(bool){
-        setCookie("waifuVoice-enable", 'true', cookieExpireDate);
-    } else {
-        setCookie("waifuVoice-enable", 'false', cookieExpireDate);
-    }
-    
-}
-
-function liveshowBackplayerCookie(bool)
-{
-    if(bool){
-        setCookie("liveshowPlayer-enable", 'true', cookieExpireDate);
-    } else {
-        setCookie("liveshowPlayer-enable", 'false', cookieExpireDate);
-    }
-}
 
 
 
@@ -248,42 +269,51 @@ function liveshowBackplayerCookie(bool)
 
 function mainWaifuSet(index)
 {
-    var id = parseInt(id_log[index][0]);
-    var name = id_log[index][1];
-    var idolized = id_log[index][2];
+
+    var id = parseInt(id_log[index][1]);
+    var name = id_log[index][2];
+    var idolized = id_log[index][3];
 
     // Once we get the info, get the image
     var path;
 
-    var scrapePath = "https://llsif-waifu-sim.github.io/llsif-waifu-girl-images/scraped-images/";
+    var scrapePath = "https://imcg-waifu-sim.github.io/imcg-waifu-girl-images/scraped-images/audio/";
+    //var cardPicPath = "https://llsif-waifu-sim.github.io/llsif-waifu-card-pics/scraped-images/audio/"
 
     if(isOthers(name)){
         scrapePath = "https://llsif-waifu-sim.github.io/llsif-waifu-girl-images/scraped-images/z-others/"
+        cardPicPath = "https://llsif-waifu-sim.github.io/llsif-waifu-card-pics/scraped-images/z-others/"
     } 
 
+    
+    // If talking about Muse & Aqours
     if(idolized == 'yes')
     {
-        path = scrapePath + name + "/" + id + "_id.png";
+        path = scrapePath + name + "/" + id + "_ev.png";
+        //cardPicPath = cardPicPath + name + "/" + id + "_ev.png";
         $('#select-idol').val('yes').selectmenu('refresh');
     }else{
+        id = (parseInt(id)-1).toString();
         path = scrapePath + name +  "/" + id + ".png";
+        //cardPicPath = cardPicPath + name +  "/" + id + ".png";
         $('#select-idol').val('no').selectmenu('refresh');
     }
+    
 
-
-
+        
 
 
     //file exists
     document.getElementById("idol_img").src=path;
+    //document.getElementById("cardPicImg").src = cardPicPath;
 
-    nameAssign(name);
-    $('#select-waifu').val(name).selectmenu('refresh');
-
-
+    if(name.split('_').length < 2)
+    {
+        nameAssign(name);
+    } else {
+        nameAssign(name.split('_')[1]);
+    }
     document.getElementById("card_id").value = id;
-
-
 
     if (globalAudio!=null){
         globalAudio.pause();
@@ -319,42 +349,82 @@ function volumeBackSet(volume_value)
 }
 
 
-
 function savedWaifuLoad(index)
 {
 
-    var id = parseInt(id_log[index][0]);
-    var name = id_log[index][1];
-    var idolized = id_log[index][2];
+
+
+    var id = parseInt(id_log[index][1]);
+    var name = id_log[index][2];
+    var idolized = id_log[index][3];
+
 
 
     // Once we get the info, get the image
     var path;
 
-    var scrapePath = "https://llsif-waifu-sim.github.io/llsif-waifu-girl-images/scraped-images/";
+    var scrapePath = "https://imcg-waifu-sim.github.io/imcg-waifu-girl-images/scraped-images/audio/";
+    //var scrapePath = "../distribution/imcg-waifu-girl-images/scraped-images/audio/";
+    //var cardPicPath = "https://imcg-waifu-sim.github.io/imcg-waifu-girl-images/scraped-images/audio/"
 
-    if(isOthers(name)){
-        scrapePath = "https://llsif-waifu-sim.github.io/llsif-waifu-girl-images/scraped-images/z-others/"
-    } 
 
+
+    var idNormal = convertToNormalForm(id, idolized);
+    //alert(idNormal);
+
+    // If talking about Muse & Aqours
     if(idolized == 'yes')
     {
-        path = scrapePath + name + "/" + id + "_id.png";
-        $('#select-idol').val('yes').selectmenu('refresh');
+        path = scrapePath + name + "/" + idNormal + "_ev.png";
+        //cardPicPath = cardPicPath + name + "/" + idNormal + "_ev.png";
+        document.querySelector("input[value='yes']").checked = true;
     }else{
-        path = scrapePath + name +  "/" + id + ".png";
-        $('#select-idol').val('no').selectmenu('refresh');
+        path = scrapePath + name +  "/" + idNormal + ".png";
+        //cardPicPath = cardPicPath + name +  "/" + idNormal + ".png";
+        document.querySelector("input[value='no']").checked = true;
     }
 
+
     //file exists
-    document.getElementById("idol_img").src=path;
+    // taking into consideration of charBackground settings
+    if(charBackground && id_log[globalIndex][4] == 'sub'){
+        // If character backgrounds are on
 
-    nameAssign(name);
-    $('#select-waifu').val(name).selectmenu('refresh');
+        var id = id_log[globalIndex][1];
+        var name = id_log[globalIndex][2];
+        var evolved = id_log[globalIndex][3];
 
+        var backpath = ''
+        if(evolved == 'no'){
+            id = (parseInt(id)-1).toString();
+            backpath = "https://imcg-waifu-sim.github.io/imcg-waifu-girl-images/scraped-images/audio/" + name + "/"+ id +"_pev.png";
+        } else {
+            id = (parseInt(id)+1).toString();
+            backpath = "https://imcg-waifu-sim.github.io/imcg-waifu-girl-images/scraped-images/audio/" + name + "/"+ id +"_p.png";
+        }
+
+        document.getElementById("homeScreen").src=backpath;
+        document.getElementById("idol_img").src='./images/blank.png';
+    } else {
+        // if they are off or there is no character background (default card)
+        
+        var backpath = 'images/background/background' + background.toString() + '.png';
+        document.getElementById("idol_img").src=path;
+        //document.getElementById("cardPicImg").src = cardPicPath;
+        document.getElementById("homeScreen").src=backpath;
+
+    }
+
+
+
+
+    if(name.split('_').length < 2)
+    {
+        nameAssign(name);
+    } else {
+        nameAssign(name.split('_')[1]);
+    }
     document.getElementById("card_id").value = id;
-
-
 
     if (globalAudio!=null){
         globalAudio.pause();
@@ -368,77 +438,6 @@ function savedWaifuLoad(index)
 }
 
 
-
-
-
-
-
-
-
-
-// Functions that the cookie functions may need
-function getFullName(name)
-{
-    if(name == 'honoka')
-    {
-        return 'Kousaka Honoka';
-    } else if(name == 'kotori'){
-        return 'Minami Kotori';
-    }else if(name == 'umi'){
-        return 'Sonoda Umi';
-    } else if(name == 'hanayo'){
-        return 'Koizumi Hanayo';
-    } else if(name == 'rin'){
-        return 'Hoshizora Rin';
-    } else if(name == 'maki'){
-        return 'Nishikino Maki';
-    } else if(name == 'nozomi'){
-        return 'Tojo Nozomi';
-    } else if(name == 'eli'){
-        return 'Ayase Eli';
-    } else if(name == 'nico'){
-        return 'Yazawa Nico';
-
-
-    } else if (name == 'chika'){
-        return 'Takami Chika';
-    } else if(name == 'you'){
-        return 'Watanabe You';
-    }else if(name == 'riko'){
-        return 'Sakurauchi Riko';
-    } else if(name == 'ruby'){
-        return 'Kurosawa Ruby';
-    } else if(name == 'hanamaru'){
-        return 'Kunikida Hanamaru';
-    } else if(name == 'yoshiko'){
-        return 'Tsushima Yoshiko';
-    } else if(name == 'dia'){
-        return 'Kurosawa Dia';
-    } else if(name == 'mari'){
-        return 'Ohara Mari';
-    } else if(name == 'kanan'){
-        return 'Matssura Kanan';
-
-
-
-    } else if(name == 'tsubasa'){
-        return 'Kira Tsubasa';
-    } else if(name == 'anju'){
-        return 'Yuki Anju';
-    } else if(name == 'erena'){
-        return 'Todo Erena';
-
-     // For the other characters
-    } else if(name == 'shiitake'){
-        return 'Shiitake';
-    } else if(name == 'alpaca'){
-        return 'Alpaca';
-
-
-    } else {
-        return 'none';
-    } 
-}
 
 function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
