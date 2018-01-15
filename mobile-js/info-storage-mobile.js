@@ -377,11 +377,11 @@ function savedWaifuLoad(index)
     {
         path = scrapePath + name + "/" + idNormal + "_ev.png";
         //cardPicPath = cardPicPath + name + "/" + idNormal + "_ev.png";
-        document.querySelector("input[value='yes']").checked = true;
+        $('#select-idol').val('yes').selectmenu('refresh');
     }else{
         path = scrapePath + name +  "/" + idNormal + ".png";
         //cardPicPath = cardPicPath + name +  "/" + idNormal + ".png";
-        document.querySelector("input[value='no']").checked = true;
+        $('#select-idol').val('no').selectmenu('refresh');
     }
 
 

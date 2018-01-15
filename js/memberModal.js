@@ -12,10 +12,10 @@ function loadWaifuList()
 
             if(name.split('_').length < 2)
             {
-                html_name = name;
+                name = capitalizeFirstLetter(name);
             } else {
                 var firstName = capitalizeFirstLetter(name.split('_')[1]);
-                var lastName = capitalizeFirstLetter(name.split('_')[0])
+                var lastName = capitalizeFirstLetter(name.split('_')[0]);
                 name = 'Name: ' + lastName + ' ' + firstName;
             }
 
@@ -36,10 +36,10 @@ function loadWaifuList()
 
             if(name.split('_').length < 2)
             {
-                html_name = name;
+                name = capitalizeFirstLetter(name);
             } else {
                 var firstName = capitalizeFirstLetter(name.split('_')[1]);
-                var lastName = capitalizeFirstLetter(name.split('_')[0])
+                var lastName = capitalizeFirstLetter(name.split('_')[0]);
                 name = 'Name: ' + lastName + ' ' + firstName;
             }
 
@@ -60,10 +60,11 @@ function loadWaifuList()
 
             if(name.split('_').length < 2)
             {
-                html_name = name;
+                name = capitalizeFirstLetter(name);
+
             } else {
                 var firstName = capitalizeFirstLetter(name.split('_')[1]);
-                var lastName = capitalizeFirstLetter(name.split('_')[0])
+                var lastName = capitalizeFirstLetter(name.split('_')[0]);
                 name = 'Name: ' + lastName + ' ' + firstName;
             }
 

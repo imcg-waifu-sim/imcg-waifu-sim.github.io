@@ -1,5 +1,8 @@
+// THIS IS FOR IDOLMASTER CINDERELLA GIRLS
+
+
 var globalAudio = null;
-var globalWaifu = 'honoka';
+var globalWaifu = 'uzuki';
 var maxNumOfCard = id_log[id_log.length-1][0];
 var language = 'english';
 var background_playing = false;
@@ -35,7 +38,6 @@ $(window).bind("orientationchange", function(e){
 });
 
 
-// THIS IS FOR IDOLMASTER CINDERELLA GIRLS
 
 var globalAudio = null;
 var globalWaifu = 'uzuki';
@@ -607,7 +609,7 @@ function createQuickWaifuSelect(arr){
 	resAr = [];
 
 	arr.sort();
-	
+
 	for(var i = 0; i < arr.length; i++){
 
 		if(arr[i][0].split("_").length < 2){
@@ -622,15 +624,14 @@ function createQuickWaifuSelect(arr){
 
 		// Now we create selectbox
 
-		var selectBoxWaifu = document.getElementById("select-waifu");
-   		var option = document.createElement("option");
-        option.text = fullName;
-        option.value = arr[i][1];
+		var appendStr = '<option value="'+arr[i][1]+'">'+fullName+'</option>';
 
-        selectBoxWaifu.add(option);
-
+		$('#select-waifu').append(appendStr);
 
 	}
+
+	$('#select-waifu').selectmenu("refresh", true);
+
 
 }
 
@@ -647,11 +648,12 @@ window.onload = function() {
 	checkEnTransCookie();
 	checkVolumeCookie();
 
-	getCurrentOrientation();
+	//getCurrentOrientation();
 
 	// Going to create the quick waifu selectbox
 	rearrangeIDAr = id_log.slice();
 	var nameAR = removeOccIDAr(rearrangeIDAr);
+
 	createQuickWaifuSelect(nameAR);
 
 	backgroundAudio=document.getElementById("origin-music-player");
@@ -1615,7 +1617,7 @@ function changeWaifu(name){
 
 		    if(name.split('_').length < 2)
 			{
-				html_name = name;
+				html_name = 'Name: ' + capitalizeFirstLetter(name);
 			} else {
 				var firstName = capitalizeFirstLetter(name.split('_')[1]);
 				var lastName = capitalizeFirstLetter(name.split('_')[0])
@@ -1650,7 +1652,7 @@ function changeWaifu(name){
 
 		    if(name.split('_').length < 2)
 			{
-				html_name = name;
+				html_name = 'Name: ' + capitalizeFirstLetter(name);
 			} else {
 				var firstName = capitalizeFirstLetter(name.split('_')[1]);
 				var lastName = capitalizeFirstLetter(name.split('_')[0])
@@ -1684,7 +1686,7 @@ function changeWaifu(name){
 
 		    if(name.split('_').length < 2)
 			{
-				html_name = name;
+				html_name = 'Name: ' + capitalizeFirstLetter(name);
 			} else {
 				var firstName = capitalizeFirstLetter(name.split('_')[1]);
 				var lastName = capitalizeFirstLetter(name.split('_')[0])
@@ -1773,46 +1775,6 @@ function changeWaifu(name){
 			document.getElementById("camera_but").src="images/buttons/camera-button.png";
 		} else if(clicked_id == 'liveshow_but'){
 			document.getElementById("liveshow_but").src="images/buttons/liveshow-button.png";
-
-
-		} else if(clicked_id == 'hanayo_but'){
-			document.getElementById("hanayo_but").src="images/chibi-waifu/hanayo.png";
-		} else if(clicked_id == 'rin_but'){
-			document.getElementById("rin_but").src="images/chibi-waifu/rin.png";
-		} else if(clicked_id == 'maki_but'){
-			document.getElementById("maki_but").src="images/chibi-waifu/maki.png";
-		} else if(clicked_id == 'honoka_but'){
-			document.getElementById("honoka_but").src="images/chibi-waifu/honoka.png";
-		} else if(clicked_id == 'umi_but'){
-			document.getElementById("umi_but").src="images/chibi-waifu/umi.png";
-		} else if(clicked_id == 'kotori_but'){
-			document.getElementById("kotori_but").src="images/chibi-waifu/kotori.png";	
-		} else if(clicked_id == 'nozomi_but'){
-			document.getElementById("nozomi_but").src="images/chibi-waifu/nozomi.png";
-		} else if(clicked_id == 'eli_but'){
-			document.getElementById("eli_but").src="images/chibi-waifu/eli.png";
-		} else if(clicked_id == 'nico_but'){
-			document.getElementById("nico_but").src="images/chibi-waifu/nico.png";
-		
-		} else if(clicked_id == 'ruby_but'){
-			document.getElementById("ruby_but").src="images/chibi-waifu/ruby.png";
-		} else if(clicked_id == 'hanamaru_but'){
-			document.getElementById("hanamaru_but").src="images/chibi-waifu/hanamaru.png";
-		} else if(clicked_id == 'yoshiko_but'){
-			document.getElementById("yoshiko_but").src="images/chibi-waifu/yoshiko.png";
-		} else if(clicked_id == 'chika_but'){
-			document.getElementById("chika_but").src="images/chibi-waifu/chika.png";
-		} else if(clicked_id == 'you_but'){
-			document.getElementById("you_but").src="images/chibi-waifu/you.png";
-		} else if(clicked_id == 'riko_but'){
-			document.getElementById("riko_but").src="images/chibi-waifu/riko.png";	
-		} else if(clicked_id == 'kanan_but'){
-			document.getElementById("kanan_but").src="images/chibi-waifu/kanan.png";
-		} else if(clicked_id == 'mari_but'){
-			document.getElementById("mari_but").src="images/chibi-waifu/mari.png";
-		} else if(clicked_id == 'dia_but'){
-			document.getElementById("dia_but").src="images/chibi-waifu/dia.png";
-
 
 
 		} else if(clicked_id == 'eng_but'){

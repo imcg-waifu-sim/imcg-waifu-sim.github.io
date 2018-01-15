@@ -1554,7 +1554,7 @@ function changeWaifu(name){
 
 		    if(name.split('_').length < 2)
 			{
-				html_name = name;
+				html_name = capitalizeFirstLetter(name);
 			} else {
 				var firstName = capitalizeFirstLetter(name.split('_')[1]);
 				var lastName = capitalizeFirstLetter(name.split('_')[0])
@@ -1589,7 +1589,7 @@ function changeWaifu(name){
 
 		    if(name.split('_').length < 2)
 			{
-				html_name = name;
+				html_name = capitalizeFirstLetter(name);
 			} else {
 				var firstName = capitalizeFirstLetter(name.split('_')[1]);
 				var lastName = capitalizeFirstLetter(name.split('_')[0])
@@ -1623,7 +1623,7 @@ function changeWaifu(name){
 
 		    if(name.split('_').length < 2)
 			{
-				html_name = name;
+				html_name = capitalizeFirstLetter(name);
 			} else {
 				var firstName = capitalizeFirstLetter(name.split('_')[1]);
 				var lastName = capitalizeFirstLetter(name.split('_')[0])
