@@ -24,3 +24,19 @@ $("#LiveshowSwitch").change(liveshowToggle);       //event, calls myToggle()
 		liveshowBackplayerCookie(true);
 	}
 }
+
+$("#BGMAutoSwitch").change(BGMAutoToggle);       //event, calls myToggle()  
+
+	function BGMAutoToggle(){ 
+	var a = $("#BGMAutoSwitch").prop("checked") ? "on" : "off";
+	if(a == "off"){
+		BGAutoPlay  = false;
+		BGMAutoPlayCookie('off');
+	}else{
+		BGAutoPlay = true;
+		BGMAutoPlayCookie('on');
+		
+	}
+}
+
+

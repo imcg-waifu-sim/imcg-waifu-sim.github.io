@@ -150,6 +150,20 @@ function checkBackgroundCookie() {
     }
 }
 
+function checkBGMAutoPlayCookie(){
+    var index=getCookie("audioAutoPlay");
+     if (index != null && index != "") {
+        if(index=='off'){
+            BGAutoPlay = false;
+            pauseBackgroundMusic();
+        } else {
+            BGAutoPlay = true;
+        }
+        
+    } else{
+        BGAutoPlay = true;
+    }
+}
 
 function checkVolumeCookie() {
     var voice=getCookie("volumeVoice-value");
@@ -256,9 +270,10 @@ function storeVolumeMusicCookie(volume)
     setCookie("volumeBack-value", volume, cookieExpireDate);
 }
 
-function storeVolumeVoiceCookie(volume)
+
+function BGMAutoPlayCookie(index)
 {
-    setCookie("volumeVoice-value", volume, cookieExpireDate);
+    setCookie("audioAutoPlay", index, cookieExpireDate);
 }
 
 

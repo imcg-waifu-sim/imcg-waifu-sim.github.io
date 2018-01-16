@@ -7,8 +7,9 @@
 	<link rel="stylesheet" type="text/css" href="css/mobile-scene.css">
 	<link rel="stylesheet" href="css/font-awesome.min.css">
 	
-
+	<!--
 	<script src="mobile-js/redirect-mobile.js"></script>
+	-->
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
@@ -60,7 +61,7 @@
 
   <div data-role="page" id="pageone" style="background:#9A02F1;">
     <div data-role="header">
-     <h1>IM CG Waifu Sim</h1>
+     <h1>Idolm@ster CG Waifu Sim</h1>
   </div>
 
    <div data-role="navbar">
@@ -99,27 +100,29 @@
   		<script src='mobile-js/touch-event.js'></script>
 
     	<div id="speech-bubble" class="bubble">
-    		<font style='font-family: "Arial";letter-spacing: 0.2px;font-weight: 5; font-size: 60%; color:white; text-align: left;'><div id='speech-text' style='opacity: 2.0;'>
+    		<font id='speech-font' style='font-family: "Arial";letter-spacing: 0.2px;font-weight: 5; font-size: 12px; color:white; text-align: left;'><div id='speech-text' style='opacity: 2.0;'>
 		 	 404: Comment not found
 		 	 </div></font>
 		</div>
 
 		<div id="translation-bubble" class="bubbleEN">
-			<font style='font-family: "Arial";letter-spacing: 0.2px;font-weight: 5; font-size: 45%; text-align: left;'>
+			<font id='powered-google-font' style='font-family: "Arial";letter-spacing: 0.2px;font-weight: 5; font-size: 7px; text-align: left;'>
 			<div>Powered By Google Translate:</div>
 			</font>
 
-    		<font style='font-family: "Arial";letter-spacing: 0.2px;font-weight: 5; font-size: 65%; text-align: left;'>
+    		<font id='trans-font' style='font-family: "Arial";letter-spacing: 0.2px;font-weight: 5; font-size: 10px; text-align: left;'>
     		<div id='speech-text-en' style='opacity: 2.0;'>
     
 		 	 404: Translation not found
 		 	 </div></font>
 		 	 <br>
+		 	 <center>
 		 	 <span class="closeText" onclick='closeTranslate()'>
-		 	 	<font style="font-size: 55%; ">
-		 	 		Close This
+		 	 	<font id='close-trans' style="font-size: 10px; color:blue;">
+		 	 		<u>Close This</u>
 		 	 	</font>
 		 	 </span>
+		 	 </center>
 		</div>
 
 	</div>
@@ -137,7 +140,7 @@
 	</table>
 
 	
-	<button id="charBack_but"  style='width:100%; background:#64FE2E;border-color:#64FE2E;' class="ui-btn" type="button" onclick='charBackgroundChange()'><font color='white'>Character Background: ON</font></button>
+	<button id="charBack_but"  style='width:100%; background:#01DF3A;border-color:#01DF3A;' class="ui-btn" type="button" onclick='charBackgroundChange()'><font color='white'>Character Background: ON</font></button>
 
 
 	<select class="select-waifu" name="select-waifu" id="select-waifu" style='width:100%;overflow:scroll;' onchange="changeWaifu(this.value)"></select>
@@ -188,14 +191,17 @@
 	    <p>Enable Waifu Voice: <input type="checkbox" data-role="flipswitch" name="waifuVoiceSwitch" id="waifuVoiceSwitch" data-wrapper-class="custom-size-flipswitch" checked=""></p>
 
 	    <p>Liveshow backplayer mode: <input type="checkbox" data-role="flipswitch" name="LiveshowSwitch" id="LiveshowSwitch" data-wrapper-class="custom-size-flipswitch" checked=""></p>
+	    <p>Enable Background Music Autoplay: <input type="checkbox" data-role="flipswitch" name="BGMAutoSwitch" id="BGMAutoSwitch" data-wrapper-class="custom-size-flipswitch" checked=""></p>
+	    <!--
 	    <p>
 	    	<select class="select-language" name="select-language" id="select-language" style='width:100%' onchange="changeLanguage()">
 				<option value="0">English</option>
 				<option value="1">Japanese</option>
 			</select>
 	    </p>
+	    -->
 	    <p>
-	    	<button id="turnOnTranslate_but" type="button"  onclick='openTranslate()'>Show English Translations (by Google Translate)</button>
+	    	<button id="turnOnTranslate_but" type="button" style='background:orange; border-color:orange;' onclick='openTranslate()'><font style='color:white'>Use EN Translations</font></button>
 	    </p>
 	    <p>
 	    	<select class="select-bgmusic" name="select-bgmusic" id="select-bgmusic" style='width:100%' onchange="changeBGMusic()">
@@ -206,7 +212,7 @@
 			</select>
 	    </p>
 		<p>
-			<a href="#updateModal" data-rel="dialog" style="background:orange;border-color:orange;" class="ui-btn ui-btn-inline ui-corner-all"><span style='color:white;'>View Updates</span></a>
+			<a href="#updateModal" data-rel="dialog" style="background:#2E9AFE;border-color:#2E9AFE;" class="ui-btn ui-btn-inline ui-corner-all"><span style='color:white;'>View Updates</span></a>
 		</p>
 
 	    <a href="#pageone" data-rel="close" class="ui-btn ui-btn-inline ui-shadow ui-corner-all ui-btn-a ui-icon-delete ui-btn-icon-left">Exit</a>
@@ -479,7 +485,7 @@
 				<li>Site is still a work in progress</li>
 			</ul>
 
-			 <a href="#pageone" data-rel="close" class="ui-btn ui-btn-inline  ui-corner-all">Continue</a>
+			 <a href="#pageone" data-rel="close" class="ui-btn ui-btn-inline  ui-corner-all" onclick='updateToBGMusic();'>Continue</a>
 		
 	  </div>
 </div>

@@ -1,6 +1,4 @@
 // THIS IS FOR IDOLMASTER CINDERELLA GIRLS
-
-
 var globalAudio = null;
 var globalWaifu = 'uzuki';
 var maxNumOfCard = id_log[id_log.length-1][0];
@@ -18,14 +16,26 @@ var enableOutsideVal = true;
 var charBackground = true;
 var enTransOn = true;
 
+var BGAutoPlay = true;
+
+
 function getCurrentOrientation()
 {
 	if(window.innerHeight > window.innerWidth){
 	    orientationMode = 'portrait';
-	    //document.getElementById("speech-font").style.font = "9px arial";
+	    document.getElementById("speech-font").style.font = "14px arial";
+	    document.getElementById('trans-font').style.font = "12px arial";
+	    document.getElementById('powered-google-font').style.font = "7px arial";
+	    document.getElementById('close-trans').style.font = "10px arial";
+
+
+
 	} else {
 		orientationMode = 'landscape';
-		//document.getElementById("speech-font").style.font = "14px arial";
+		document.getElementById("speech-font").style.font = "26px arial";
+		document.getElementById('trans-font').style.font = "24px arial";
+		document.getElementById('powered-google-font').style.font = "14px arial";
+		document.getElementById('close-trans').style.font = "20px arial";
 	}
 }
 
@@ -34,10 +44,17 @@ $(window).bind("orientationchange", function(e){
    if(ow == "p")
    {
    		orientationMode = 'portrait';
-   		//document.getElementById("speech-font").style.font = "9px arial";
+   		document.getElementById("speech-font").style.font = "14px arial";
+   		document.getElementById('trans-font').style.font = "12px arial";
+   		document.getElementById('powered-google-font').style.font = "7px arial";
+   		document.getElementById('close-trans').style.font = "10px arial";
+
    } else {
    		orientationMode = 'landscape';
-   		//document.getElementById("speech-font").style.font = "14px arial";
+   		document.getElementById("speech-font").style.font = "26px arial";
+   		document.getElementById('trans-font').style.font = "24px arial";
+   		document.getElementById('powered-google-font').style.font = "14px arial";
+   		document.getElementById('close-trans').style.font = "20px arial";
    }	
 });
 
@@ -82,7 +99,7 @@ var timeout;
 var countdown = 20000;
 
 
-
+/*
 $(document).on('mousemove', function(){
 
 	clearTimeout(timeout);
@@ -93,6 +110,9 @@ $(document).on('mousemove', function(){
 	
 
 })
+*/
+
+
 
 
 function inactiveSpeech()
@@ -626,19 +646,22 @@ function createQuickWaifuSelect(arr){
 }
 
 window.onload = function() {
-	
 
 	$.mobile.changePage('#updateModal');
 
 	// Preform cookie checks
 	checkCookie();
+	checkBGMAutoPlayCookie();
+
 	checkBackgroundCookie();
 	checkCharBackgroundCookie();
 	checkBGMCookie();
 	checkEnTransCookie();
 	checkVolumeCookie();
 
-	//getCurrentOrientation();
+	getCurrentOrientation();
+
+	
 
 	// Going to create the quick waifu selectbox
 	rearrangeIDAr = id_log.slice();
@@ -675,6 +698,18 @@ function pauseBackgroundMusic()
 {
 	var audio = document.getElementById("origin-music-player"); // For the main background
 	audio.pause();
+}
+
+
+function updateToBGMusic()
+{
+
+	if(BGAutoPlay){
+		playBackgroundMusic();
+	} else {
+		pauseBackgroundMusic();
+		
+	}
 }
 
 function playBackgroundMusic()
@@ -766,7 +801,7 @@ function charBackgroundToggleOn()
 	}
 
 	document.getElementById("charBack_but").innerHTML = '<font color="white">Character Background: ON</font>';
-	document.getElementById("charBack_but").style.background = "#64FE2E";
+	document.getElementById("charBack_but").style.background = "#01DF3A";
 
 
 }
@@ -861,6 +896,9 @@ function changeBackgroundBack()
 
 }
 function openTranslate(){
+
+	commandSelect(0);
+
 	enTransOn = true;
 	$("#translation-bubble").fadeIn();
 	storeEnTransOn('on');
